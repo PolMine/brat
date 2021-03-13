@@ -1,0 +1,22 @@
+Package: brat
+Type: Package
+Title: Experimental wrapper for the brat annotation tool
+Version: 0.0.1.9001
+Date: 2021-03-13
+Authors@R: person("Andreas", "Blaette", role = c("aut", "cre"), email = "andreas.blaette@uni-due.de")
+Description: Expose brat annotation tool. 
+Depends:
+    R (>= 3.5.0),
+    methods
+Imports:
+    htmlwidgets
+Suggests:
+    knitr
+VignetteBuilder: knitr
+LazyData: yes
+License: GPL-3
+Encoding: UTF-8
+Collate:
+    'brat.R'
+RoxygenNote: 7.1.1
+Roxygen: list(markdown = TRUE)

@@ -633,16 +633,17 @@ var Util = (function(window, undefined) {
         inactive: proceedWithFonts,
         fontactive: function(fontFamily, fontDescription) {
           // Note: Enable for font debugging
-          // console.log("font active: ", fontFamily, fontDescription);
+          console.log("font active: ", fontFamily, fontDescription);
         },
         fontloading: function(fontFamily, fontDescription) {
           // Note: Enable for font debugging
-          // console.log("font loading:", fontFamily, fontDescription);
+          console.log("font loading:", fontFamily, fontDescription);
         },
       };
 
-      WebFont.load(webFontConfig);
+      // WebFont.load(webFontConfig);
 
+      fontsLoaded = true;
       setTimeout(function() {
         if (!fontsLoaded) {
           console.error('Timeout in loading fonts');

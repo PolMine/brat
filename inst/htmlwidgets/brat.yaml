@@ -1,0 +1,22 @@
+dependencies:
+- name: jquery
+  src: "htmlwidgets/lib/brat/client/lib"
+  version: 2.1.1
+  script:
+    - jquery.min.js
+    - jquery.svg.min.js
+    - jquery.svgdom.min.js
+- name: brat
+  src: "htmlwidgets/lib/brat"
+  version: 1.3
+  script:
+    - client/src/configuration.js
+    - client/src/util.js
+    - client/src/annotation_log.js
+    - client/lib/webfont.js
+    - client/src/dispatcher.js
+    - client/src/url_monitor.js
+    - client/src/visualizer.js
+  stylesheet:
+    - static/style-vis.css
+
