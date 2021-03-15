@@ -12,7 +12,8 @@
 NULL
 
 
-#' @param data Data to be passed into widget.
+#' @param document_data Data to be passed into widget.
+#' @param collection_data Collection data.
 #' @param width The width of the widget.
 #' @param height The height of the widget.
 #' @param outputId The ID of the widget.
@@ -31,10 +32,18 @@ NULL
 #'     list('T5', 'Person', list(c(64, 68)))
 #'   )
 #' )
-#' brat(data)
-brat <- function(data = list(), width = NULL, height = NULL) {
+#' collData <- list(
+#'   entity_types = list(list(
+#'     type = "Person",
+#'     labels = c("Person", "Per"),
+#'     bgColor = "#7fa2ff",
+#'     borderColor = "darken"
+#'   ))
+#' )
+#' brat(doc_data = data, coll_data = collData)
+brat <- function(doc_data = list(), coll_data = list(), width = NULL, height = NULL) {
   
-  x <- list(data = data)
+  x <- list(docData = doc_data, collData = coll_data)
   
   htmlwidgets::createWidget(name = "brat", x = x, width = width, height = height)
 }
@@ -55,3 +64,10 @@ renderBrat <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
   shinyRenderWidget(expr, bratOutput, env, quoted = TRUE)
 }
+
+
+#' Annotated Millenium Declaration
+#' 
+#' @rdname millenium_declaration 
+#' @format A `AnnotatedPlainTextDocument` object as defined in the NLP package.
+"millenium_declaration_annotated"

@@ -9,6 +9,7 @@ Depends:
     R (>= 3.5.0),
     methods
 Imports:
+    NLP,
     htmlwidgets
 Suggests:
     knitr
@@ -18,5 +19,6 @@ License: GPL-3
 Encoding: UTF-8
 Collate:
     'brat.R'
+    'data.R'
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)

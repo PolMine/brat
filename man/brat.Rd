@@ -8,15 +8,13 @@
 \alias{renderBrat}
 \title{Create brat htmlwidget}
 \usage{
-brat(data = list(), width = NULL, height = NULL)
+brat(doc_data = list(), coll_data = list(), width = NULL, height = NULL)
 
 bratOutput(outputId, width = "100\%", height = "400px")
 
 renderBrat(expr, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
-\item{data}{Data to be passed into widget.}
-
 \item{width}{The width of the widget.}
 
 \item{height}{The height of the widget.}
@@ -30,9 +28,34 @@ renderBrat(expr, env = parent.frame(), quoted = FALSE)
 \item{quoted}{A \code{logical} value.}
 
 \item{x}{Any kind of input.}
+
+\item{document_data}{Data to be passed into widget.}
+
+\item{collection_data}{Collection data.}
 }
 \description{
 This is a lightweight wrapper for the brat annotation tool.
+}
+\examples{
+data <- list(
+  text = "Ed O'Kelley was the man who shot the man who shot Jesse James.\n What a guy. He should be hanged.",
+  entities = list(
+    list('T1', 'Person', list(c(0, 11))),
+    list('T2', 'Person', list(c(20, 23))),
+    list('T3', 'Person', list(c(37, 40))),
+    list('T4', 'Person', list(c(50, 61))),
+    list('T5', 'Person', list(c(64, 68)))
+  )
+)
+collData <- list(
+  entity_types = list(list(
+    type = "Person",
+    labels = c("Person", "Per"),
+    bgColor = "#7fa2ff",
+    borderColor = "darken"
+  ))
+)
+brat(doc_data = data, coll_data = collData)
 }
 \author{
 Andreas Blaette
