@@ -7,6 +7,7 @@ HTMLWidgets.widget({
   factory: function(el, width, height) {
     
     var annodata;
+    var dispatcher;
     
     var webFontURLs = [
       './static/fonts/Astloch-Bold.ttf',
@@ -18,13 +19,19 @@ HTMLWidgets.widget({
       renderValue: function(x) {
         
         annodata = x;
-        Util.embed(el.id, annodata.collData, annodata.docData, webFontURLs);
+        dispatcher = new Dispatcher();
+        var visualizer = new Visualizer(dispatcher, el.id, webFontURLs);
+        console.log(visualizer.svg);
+        annodata.docData.collection = null;
+        dispatcher.post('collectionLoaded', [annodata.collData]);
+        dispatcher.post('requestRenderData', [annodata.docData]);
+
 
       },
       
       resize: function(width, height) {
         console.log("resize widget");
-        // Util.embed(el.id, collData, annodata.data, webFontURLs);
+        dispatcher.post('requestRenderData', [annodata.docData]);
         return undefined;
       }
 
