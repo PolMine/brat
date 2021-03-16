@@ -1907,6 +1907,7 @@ var AnnotatorUI = (function($, window, undefined) {
           dispatcher.post('requestRenderData', [document.data.docData]);
           document.annotationsUpdated++;
           if (window.HTMLWidgets.shinyMode){
+            Shiny.onInputChange('annotations', document.data.docData.entities);
             Shiny.onInputChange('annotations_updated', document.annotationsUpdated);
           };
           // END Modification by Andreas Blaette

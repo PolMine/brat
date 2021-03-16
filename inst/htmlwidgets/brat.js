@@ -26,12 +26,8 @@ HTMLWidgets.widget({
 
         // BEGIN adapted from Util.embed() in util.js 
         dispatcher = new Dispatcher();
-        console.log(el.id);
-        console.log($('#' + el.id).svg);
         var visualizer = new Visualizer(dispatcher, el.id, webFontURLs);
-        document.vis = visualizer;
-        console.log("asdf");
-        
+
         document.data.docData.collection = null;
         dispatcher.post('collectionLoaded', [document.data.collData]);
         dispatcher.post('requestRenderData', [document.data.docData]);

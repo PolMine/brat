@@ -4,6 +4,10 @@ dependencies:
   version: 2.1.1
   script:
     - jquery.min.js
+- name: jquerysvg
+  src: "htmlwidgets/lib/brat/client/lib"
+  version: 1.5.0
+  script:
     - jquery.svg.min.js
     - jquery.svgdom.min.js
 - name: brat
