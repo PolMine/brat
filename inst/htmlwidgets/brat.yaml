@@ -17,6 +17,7 @@ dependencies:
     - client/src/dispatcher.js
     - client/src/url_monitor.js
     - client/src/visualizer.js
+    - client/src/_annotator_ui.js
   stylesheet:
     - static/style-vis.css
 

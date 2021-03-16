@@ -6,6 +6,7 @@
 \alias{brat-package}
 \alias{bratOutput}
 \alias{renderBrat}
+\alias{bradget}
 \title{Create brat htmlwidget}
 \usage{
 brat(doc_data = list(), coll_data = list(), width = NULL, height = NULL)
@@ -13,6 +14,8 @@ brat(doc_data = list(), coll_data = list(), width = NULL, height = NULL)
 bratOutput(outputId, width = "100\%", height = "400px")
 
 renderBrat(expr, env = parent.frame(), quoted = FALSE)
+
+bradget(doc_data, coll_data, width = NULL, height = NULL)
 }
 \arguments{
 \item{width}{The width of the widget.}
@@ -56,6 +59,25 @@ collData <- list(
   ))
 )
 brat(doc_data = data, coll_data = collData)
+doc_data <- list(
+  text = "Ed O'Kelley was the man who shot the man who shot Jesse James.\n What a guy. He should be hanged.",
+  entities = list(
+    list('T1', 'Person', list(c(0, 11))),
+    list('T2', 'Person', list(c(20, 23))),
+    list('T3', 'Person', list(c(37, 40))),
+    list('T4', 'Person', list(c(50, 61))),
+    list('T5', 'Person', list(c(64, 68)))
+  )
+)
+coll_data <- list(
+  entity_types = list(list(
+    type = "Person",
+    labels = c("Person", "Per"),
+    bgColor = "#7fa2ff",
+    borderColor = "darken"
+  ))
+)
+bradget(doc_data = doc_data, coll_data = coll_data)
 }
 \author{
 Andreas Blaette

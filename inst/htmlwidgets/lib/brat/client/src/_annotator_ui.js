@@ -1,7 +1,7 @@
 // -*- Mode: JavaScript; tab-width: 2; indent-tabs-mode: nil; -*-
 // vim:set ft=javascript ts=2 sw=2 sts=2 cindent:
 var AnnotatorUI = (function($, window, undefined) {
-    var AnnotatorUI = function(dispatcher, svg) {
+    var AnnotatorUI = function(dispatcher, svg) { //argument annodata passed in
       var that = this;
       var arcDragOrigin = null;
       var arcDragOriginBox = null;
@@ -1128,14 +1128,14 @@ var AnnotatorUI = (function($, window, undefined) {
       var clearArcNotes = function(evt) {
         $('#arc_notes').val('');
       }
-      $('#clear_arc_notes_button').button();
-      $('#clear_arc_notes_button').click(clearArcNotes);
+      // $('#clear_arc_notes_button').button(); // will not work in HTML widget
+      // $('#clear_arc_notes_button').click(clearArcNotes); // will not work in HTML widget
 
       var clearSpanNotes = function(evt) {
         $('#span_notes').val('');
       }
-      $('#clear_span_notes_button').button();
-      $('#clear_span_notes_button').click(clearSpanNotes);
+      // $('#clear_span_notes_button').button(); // will not work in HTML widget
+      // $('#clear_span_notes_button').click(clearSpanNotes); // will not work in HTML widget
 
 
       var deleteNormalization = function(evt) {
@@ -1227,15 +1227,15 @@ var AnnotatorUI = (function($, window, undefined) {
         dispatcher.post('showForm', [normListDialog]);
         return false;
       }
-      $('#norm_list_button').button();
-      $('#norm_list_button').click(openNormList);
+      // $('#norm_list_button').button(); // will not work in HTML widget
+      // $('#norm_list_button').click(openNormList); // will not work in HTML widget
 
       var startNormQuickAdd = function(evt) {
         startNormalizationSearch(false); // go directly back to span dialog later
         return false;
       }
-      $('#norm_qadd_button').button();
-      $('#norm_qadd_button').click(startNormQuickAdd);
+      // $('#norm_qadd_button').button(); // will not work in HTML widget
+      // $('#norm_qadd_button').click(startNormQuickAdd); // will not work in HTML widget
 
       // invoked on response to ajax request for id lookup
       var setNormText = function(response) {
@@ -1286,6 +1286,8 @@ var AnnotatorUI = (function($, window, undefined) {
       $('#norm_search_query').bind('propertychange keyup input paste', normQueryUpdate);
 
       var normSearchDialog = $('#norm_search_dialog');
+      
+      /* BEGIN comment out for HTML widget
       initForm(normSearchDialog, {
           width: 800,
           width: 600,
@@ -1411,6 +1413,8 @@ var AnnotatorUI = (function($, window, undefined) {
         normSearchSubmittable = enable;
       };
       normSearchDialog.submit(normSearchSubmit);
+      
+      END comment out for HTML widget */
       var chooseNormId = function(evt) {
         var $element = $(evt.target).closest('tr');
         $('#norm_search_result_select .selected').removeClass('selected');
@@ -1484,7 +1488,9 @@ var AnnotatorUI = (function($, window, undefined) {
                         name: val,
                         collection: coll}, 'normSearchResult']);
       }
-      $('#norm_search_button').click(performNormSearch).button();
+      
+      
+      // $('#norm_search_button').click(performNormSearch).button(); // will hot work in HTML widget
       var updateNormDbLink = function() {
         var db = $('#norm_db_choice').val();
         var link = normDbUrlByDbName[db];
@@ -1893,6 +1899,19 @@ var AnnotatorUI = (function($, window, undefined) {
           }
 
           var newOffset = [selectedFrom, selectedTo];
+          
+          // BEGIN Modification by Andreas Blaette
+          document.data.docData.entities.push(
+            ['T' + document.data.docData.entities.length + 1, 'Person', [[selectedFrom, selectedTo]]]
+          );
+          dispatcher.post('requestRenderData', [document.data.docData]);
+          document.annotationsUpdated++;
+          if (window.HTMLWidgets.shinyMode){
+            Shiny.onInputChange('annotations_updated', document.annotationsUpdated);
+          };
+          // END Modification by Andreas Blaette
+
+          
           if (reselectedSpan) {
             var newOffsets = reselectedSpan.offsets.slice(0); // clone
             spanOptions.old_offsets = JSON.stringify(reselectedSpan.offsets);
@@ -1944,7 +1963,7 @@ var AnnotatorUI = (function($, window, undefined) {
             // normal span select in standard annotation mode
             // or reselect: show selector
             var spanText = data.text.substring(selectedFrom, selectedTo);
-            fillSpanTypesAndDisplayForm(evt, spanText, reselectedSpan);
+            // fillSpanTypesAndDisplayForm(evt, spanText, reselectedSpan); // not applicable in HTML widget
             // for precise timing, log annotation display to user.
             dispatcher.post('logAction', ['spanSelected']);
           } else {
@@ -1970,7 +1989,7 @@ var AnnotatorUI = (function($, window, undefined) {
       };
 
       var onMouseUp = function(evt) {
-        if (that.user === null) return;
+        // if (that.user === null) return; // does not work in HTML widget context
 
         var target = $(evt.target);
 
@@ -2526,6 +2545,7 @@ var AnnotatorUI = (function($, window, undefined) {
         saveComment(id, comment);
         dispatcher.post('hideForm');
       });
+      /* BEGIN comment out for HTML widget 
       initForm(sentCommentForm, {
           alsoResize: '#sent_comment_fs, #sent_comment_text',
           buttons: [{
@@ -2550,6 +2570,7 @@ var AnnotatorUI = (function($, window, undefined) {
             $('#sent_comment_text').val(comment).focus().select();
           }
       });
+      END comment out for HTML widget */
 
       var splitForm = $('#split_form');
       splitForm.submit(function(evt) {
@@ -2641,9 +2662,13 @@ var AnnotatorUI = (function($, window, undefined) {
         $('#unlock_type_button').toggle(locked);
         if (!locked) lockOptions = null;
       };
+      
+      /* BEGIN comment out for HTML widget
       $('#unlock_type_button').button().hide().click(function(evt) {
         setTypeLock(false);
       });
+      
+      END comment out for HTML widget */
 
       dispatcher.post('initForm', [spanForm, {
           alsoResize: '#entity_and_event_wrapper',
@@ -2940,6 +2965,8 @@ var AnnotatorUI = (function($, window, undefined) {
       }
 
       var $waiter = $('#waiter');
+      
+      /* BEGIN comment out for HTML widget 
       $waiter.dialog({
         closeOnEscape: false,
         buttons: {},
@@ -2948,10 +2975,11 @@ var AnnotatorUI = (function($, window, undefined) {
           $(evt.target).parent().find(".ui-dialog-titlebar-close").hide();
         }
       });
+      END comment out for HTML widget */ 
       // hide the waiter (Sampo said it's annoying)
       // we don't elliminate it altogether because it still provides the
       // overlay to prevent interaction
-      $waiter.parent().css('opacity', '0');
+      // $waiter.parent().css('opacity', '0'); // commented out for HTML widget
 
       var isReloadOkay = function() {
         // do not reload while the user is in the middle of editing
