@@ -1128,14 +1128,14 @@ var AnnotatorUI = (function($, window, undefined) {
       var clearArcNotes = function(evt) {
         $('#arc_notes').val('');
       }
-      $('#clear_arc_notes_button').button();
-      $('#clear_arc_notes_button').click(clearArcNotes);
+      // $('#clear_arc_notes_button').button();
+      // $('#clear_arc_notes_button').click(clearArcNotes);
 
       var clearSpanNotes = function(evt) {
         $('#span_notes').val('');
       }
-      $('#clear_span_notes_button').button();
-      $('#clear_span_notes_button').click(clearSpanNotes);
+      // $('#clear_span_notes_button').button();
+      // $('#clear_span_notes_button').click(clearSpanNotes);
 
 
       var deleteNormalization = function(evt) {
@@ -1227,15 +1227,15 @@ var AnnotatorUI = (function($, window, undefined) {
         dispatcher.post('showForm', [normListDialog]);
         return false;
       }
-      $('#norm_list_button').button();
-      $('#norm_list_button').click(openNormList);
+      // $('#norm_list_button').button();
+      // $('#norm_list_button').click(openNormList);
 
       var startNormQuickAdd = function(evt) {
         startNormalizationSearch(false); // go directly back to span dialog later
         return false;
       }
-      $('#norm_qadd_button').button();
-      $('#norm_qadd_button').click(startNormQuickAdd);
+      // $('#norm_qadd_button').button();
+      // $('#norm_qadd_button').click(startNormQuickAdd);
 
       // invoked on response to ajax request for id lookup
       var setNormText = function(response) {
@@ -1286,6 +1286,8 @@ var AnnotatorUI = (function($, window, undefined) {
       $('#norm_search_query').bind('propertychange keyup input paste', normQueryUpdate);
 
       var normSearchDialog = $('#norm_search_dialog');
+      
+      /*
       initForm(normSearchDialog, {
           width: 800,
           width: 600,
@@ -1411,6 +1413,8 @@ var AnnotatorUI = (function($, window, undefined) {
         normSearchSubmittable = enable;
       };
       normSearchDialog.submit(normSearchSubmit);
+      
+      */
       var chooseNormId = function(evt) {
         var $element = $(evt.target).closest('tr');
         $('#norm_search_result_select .selected').removeClass('selected');
@@ -1484,7 +1488,9 @@ var AnnotatorUI = (function($, window, undefined) {
                         name: val,
                         collection: coll}, 'normSearchResult']);
       }
-      $('#norm_search_button').click(performNormSearch).button();
+      
+      
+      // $('#norm_search_button').click(performNormSearch).button();
       var updateNormDbLink = function() {
         var db = $('#norm_db_choice').val();
         var link = normDbUrlByDbName[db];
@@ -1854,6 +1860,9 @@ var AnnotatorUI = (function($, window, undefined) {
           anchorOffset = sel.anchorOffset;
           focusOffset = sel.focusOffset;
         }
+        
+        console.log(anchorOffset);
+        console.log(focusOffset);
 
         if (evt.type == 'keydown') {
           var offset = sel.focusOffset;
@@ -1893,6 +1902,13 @@ var AnnotatorUI = (function($, window, undefined) {
           }
 
           var newOffset = [selectedFrom, selectedTo];
+          
+                  console.log("Span information");
+        console.log(selectedFrom);
+        console.log(selectedTo);
+        console.log(spanText);
+
+          
           if (reselectedSpan) {
             var newOffsets = reselectedSpan.offsets.slice(0); // clone
             spanOptions.old_offsets = JSON.stringify(reselectedSpan.offsets);
@@ -1956,6 +1972,11 @@ var AnnotatorUI = (function($, window, undefined) {
             // but this is clumsy and suboptimal (user may have scrolled
             // during the ajax invocation); think of a better way.
             lastRapidAnnotationEvent = evt;
+                    console.log("Span information");
+        console.log(selectedFrom);
+        console.log(selectedTo);
+        console.log(spanText);
+
             dispatcher.post('ajax', [ { 
                             action: 'suggestSpanTypes',
                             collection: coll,
@@ -1970,7 +1991,8 @@ var AnnotatorUI = (function($, window, undefined) {
       };
 
       var onMouseUp = function(evt) {
-        if (that.user === null) return;
+        console.log("onMouseUp");
+        // if (that.user === null) return;
 
         var target = $(evt.target);
 
@@ -1978,6 +2000,9 @@ var AnnotatorUI = (function($, window, undefined) {
         var targetSpanId = target.data('span-id');
         var targetChunkId = target.data('chunk-id');
         var targetArcRole = target.data('arc-role');
+        console.log(targetSpanId);
+        console.log(targetChunkId);
+        console.log(targetArcRole);
         if (!(targetSpanId !== undefined || targetChunkId !== undefined || targetArcRole !== undefined)) {
           // misclick
           clearSelection();
@@ -2526,6 +2551,7 @@ var AnnotatorUI = (function($, window, undefined) {
         saveComment(id, comment);
         dispatcher.post('hideForm');
       });
+      /*
       initForm(sentCommentForm, {
           alsoResize: '#sent_comment_fs, #sent_comment_text',
           buttons: [{
@@ -2550,6 +2576,7 @@ var AnnotatorUI = (function($, window, undefined) {
             $('#sent_comment_text').val(comment).focus().select();
           }
       });
+      */
 
       var splitForm = $('#split_form');
       splitForm.submit(function(evt) {
@@ -2641,9 +2668,13 @@ var AnnotatorUI = (function($, window, undefined) {
         $('#unlock_type_button').toggle(locked);
         if (!locked) lockOptions = null;
       };
+      
+      /* 
       $('#unlock_type_button').button().hide().click(function(evt) {
         setTypeLock(false);
       });
+      
+      */
 
       dispatcher.post('initForm', [spanForm, {
           alsoResize: '#entity_and_event_wrapper',
@@ -2940,6 +2971,8 @@ var AnnotatorUI = (function($, window, undefined) {
       }
 
       var $waiter = $('#waiter');
+      
+      /*
       $waiter.dialog({
         closeOnEscape: false,
         buttons: {},
@@ -2948,10 +2981,11 @@ var AnnotatorUI = (function($, window, undefined) {
           $(evt.target).parent().find(".ui-dialog-titlebar-close").hide();
         }
       });
+      */ 
       // hide the waiter (Sampo said it's annoying)
       // we don't elliminate it altogether because it still provides the
       // overlay to prevent interaction
-      $waiter.parent().css('opacity', '0');
+      // $waiter.parent().css('opacity', '0');
 
       var isReloadOkay = function() {
         // do not reload while the user is in the middle of editing
