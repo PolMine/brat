@@ -12,7 +12,8 @@ Imports:
     NLP,
     htmlwidgets,
     shiny,
-    miniUI
+    miniUI,
+    shinyjs
 Suggests:
     knitr
 VignetteBuilder: knitr

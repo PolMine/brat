@@ -74,12 +74,26 @@ doc_data <- list(
   )
 )
 coll_data <- list(
-  entity_types = list(list(
-    type = "Person",
-    labels = c("Person", "Per"),
-    bgColor = "#7fa2ff",
-    borderColor = "darken"
-  ))
+  entity_types = list(
+    list(
+      type = "Person",
+      labels = c("Person", "Per"),
+      bgColor = RColorBrewer::brewer.pal(8, "Accent")[1],
+      borderColor = "darken"
+    ),
+    list(
+      type = "Organization",
+      labels = c("Organization", "Org"),
+      bgColor = RColorBrewer::brewer.pal(8, "Accent")[2],
+      borderColor = "darken"
+    ),
+    list(
+      type = "Location",
+      labels = c("Location", "Loc"),
+      bgColor = RColorBrewer::brewer.pal(8, "Accent")[3],
+      borderColor = "darken"
+    )
+  )
 )
 bradget(doc_data = doc_data, coll_data = coll_data)
 }

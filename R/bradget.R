@@ -5,7 +5,7 @@
 #' @importFrom miniUI miniPage miniContentPanel gadgetTitleBar miniButtonBlock
 #'   miniTabstripPanel miniTabPanel
 #' @importFrom shiny tags runGadget paneViewer textAreaInput observeEvent
-#'   stopApp reactiveValues icon observe
+#'   stopApp reactiveValues icon observe actionButton
 #' @export bradget
 #' @rdname brat
 #' @examples 
@@ -20,42 +20,78 @@
 #'   )
 #' )
 #' coll_data <- list(
-#'   entity_types = list(list(
-#'     type = "Person",
-#'     labels = c("Person", "Per"),
-#'     bgColor = "#7fa2ff",
-#'     borderColor = "darken"
-#'   ))
+#'   entity_types = list(
+#'     list(
+#'       type = "Person",
+#'       labels = c("Person", "Per"),
+#'       bgColor = RColorBrewer::brewer.pal(8, "Accent")[1],
+#'       borderColor = "darken"
+#'     ),
+#'     list(
+#'       type = "Organization",
+#'       labels = c("Organization", "Org"),
+#'       bgColor = RColorBrewer::brewer.pal(8, "Accent")[2],
+#'       borderColor = "darken"
+#'     ),
+#'     list(
+#'       type = "Location",
+#'       labels = c("Location", "Loc"),
+#'       bgColor = RColorBrewer::brewer.pal(8, "Accent")[3],
+#'       borderColor = "darken"
+#'     )
+#'   )
 #' )
-#' bradget(doc_data = doc_data, coll_data = coll_data)
+#' a <- bradget(doc_data = doc_data, coll_data = coll_data)
+#' @importFrom shinyjs useShinyjs extendShinyjs js
+#' @importFrom NLP Annotation
+#' @importFrom shinyWidgets prettyRadioButtons
+#' @return A `AnnotatedPlainTextDocument` object as defined in the NLP package.
 bradget <- function(doc_data, coll_data) { 
   
   widget <- brat(doc_data = doc_data, coll_data = coll_data)
   values <- reactiveValues()
   
   ui <- miniPage(
+    tags$style(
+      ".buttongroup {align-items: center; justify-content: center; background-color: #f2f2f2; padding: 0 6px; display: flex; flex: none; border-top: 1px solid #ddd;}"
+    ),
+    useShinyjs(),
+    extendShinyjs(text = 'shinyjs.setCode = function(code){document.code = code}', functions = "setCode"),
     gadgetTitleBar(title = "BRAT Annotation Gadget"),
-    miniTabstripPanel(
-      miniTabPanel(
-        "Text", icon = icon("file"),
-        miniContentPanel( bratOutput("brat"))
-      )
+    miniContentPanel( bratOutput("brat")),
+    div(
+      shinyWidgets::prettyRadioButtons(
+        "type",
+        choices = sapply(coll_data[["entity_types"]], `[[`, "type"),
+        label = "", inline = TRUE
+      ),
+      class = "buttongroup"
     )
-    
   )
   
   server <- function(input, output, session) {
     
     output$brat <- renderBrat(widget)
     
+    observeEvent(input$type, js$setCode(input$type))
+
     observeEvent(
-      input$annotations_updated,
-      {
-        print(input$annotations)
-      }
+      input$done,
+      stopApp(
+        returnValue = AnnotatedPlainTextDocument(
+          s = String(doc_data[["text"]]),
+          a = Annotation(
+            id = sapply(
+              unlist(input$annotations[["ID"]]),
+              function(id) as.integer(gsub("^.*?(\\d+).*?$", "\\1", id))
+            ),
+            type = unlist(input$annotations[["type"]]),
+            start = unlist(input$annotations[["left"]]),
+            end = unlist(input$annotations[["right"]])
+          )
+        )
+      )
     )
-    
-    observeEvent(input$done, stopApp(invisible(values[["annotations"]])))
   }
   
   runGadget(ui, server, viewer = paneViewer())

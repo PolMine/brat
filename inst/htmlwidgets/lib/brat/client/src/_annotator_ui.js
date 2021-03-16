@@ -1901,13 +1901,20 @@ var AnnotatorUI = (function($, window, undefined) {
           var newOffset = [selectedFrom, selectedTo];
           
           // BEGIN Modification by Andreas Blaette
-          document.data.docData.entities.push(
-            ['T' + document.data.docData.entities.length + 1, 'Person', [[selectedFrom, selectedTo]]]
-          );
-          dispatcher.post('requestRenderData', [document.data.docData]);
-          document.annotationsUpdated++;
           if (window.HTMLWidgets.shinyMode){
-            Shiny.onInputChange('annotations', document.data.docData.entities);
+            var docId = 'T' + (document.data.docData.entities.length + 1)
+            
+            document.data.docData.entities.push([docId, document.code, [[selectedFrom, selectedTo]]]);
+            dispatcher.post('requestRenderData', [document.data.docData]);
+
+            document.annotations.id.push(docId);
+            document.annotations.type.push(document.code);
+            document.annotations.start.push(selectedFrom);
+            document.annotations.end.push(selectedTo);
+
+            document.annotationsUpdated++;
+
+            Shiny.onInputChange('annotations', document.annotations);
             Shiny.onInputChange('annotations_updated', document.annotationsUpdated);
           };
           // END Modification by Andreas Blaette
