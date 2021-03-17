@@ -29,6 +29,9 @@ NULL
 #'     list('T3', 'Person', list(c(37, 40))),
 #'     list('T4', 'Person', list(c(50, 61))),
 #'     list('T5', 'Person', list(c(64, 68)))
+#'   ),
+#'   relations = list(
+#'     list('R1', 'Anaphora', list(list('Anaphor', 'T2'), list('Entity', 'T1')))
 #'   )
 #' )
 #' collData <- list(
@@ -36,8 +39,19 @@ NULL
 #'     type = "Person",
 #'     labels = c("Person", "Per"),
 #'     bgColor = "#7fa2ff",
-#'     borderColor = "darken"
-#'   ))
+#'     borderColor = "darken",
+#'     arcs = list(list(targets = list("Person")))
+#'   )),
+#'   relation_types = list(list(
+#'     type = "Anaphora",
+#'     labels = c("Anaphora", "Ana"),
+#'     dashArray = "3,3",
+#'     color = "purple",
+#'     args = list(
+#'       list(role = "Anaphor", targets = "Person"),
+#'       list(role = "Entity", targets = "Person")
+#'     )
+#'    ))
 #' )
 #' if (interactive()) brat(doc_data = data, coll_data = collData)
 #' 

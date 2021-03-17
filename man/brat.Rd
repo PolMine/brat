@@ -49,6 +49,9 @@ data <- list(
     list('T3', 'Person', list(c(37, 40))),
     list('T4', 'Person', list(c(50, 61))),
     list('T5', 'Person', list(c(64, 68)))
+  ),
+  relations = list(
+    list('R1', 'Anaphora', list(list('Anaphor', 'T2'), list('Entity', 'T1')))
   )
 )
 collData <- list(
@@ -56,8 +59,19 @@ collData <- list(
     type = "Person",
     labels = c("Person", "Per"),
     bgColor = "#7fa2ff",
-    borderColor = "darken"
-  ))
+    borderColor = "darken",
+    arcs = list(list(targets = list("Person")))
+  )),
+  relation_types = list(list(
+    type = "Anaphora",
+    labels = c("Anaphora", "Ana"),
+    dashArray = "3,3",
+    color = "purple",
+    args = list(
+      list(role = "Anaphor", targets = "Person"),
+      list(role = "Entity", targets = "Person")
+    )
+   ))
 )
 if (interactive()) brat(doc_data = data, coll_data = collData)
 
@@ -84,7 +98,8 @@ doc_data <- list(
     list('T3', 'Person', list(c(37, 40))),
     list('T4', 'Person', list(c(50, 61))),
     list('T5', 'Person', list(c(64, 68)))
-  )
+  ),
+  relations = list()
 )
 coll_data <- list(
   entity_types = list(
@@ -92,7 +107,8 @@ coll_data <- list(
       type = "Person",
       labels = c("Person", "Per"),
       bgColor = RColorBrewer::brewer.pal(8, "Accent")[1],
-      borderColor = "darken"
+      borderColor = "darken",
+      arcs = list(list(targets = list("Person")))
     ),
     list(
       type = "Organization",
@@ -106,7 +122,17 @@ coll_data <- list(
       bgColor = RColorBrewer::brewer.pal(8, "Accent")[3],
       borderColor = "darken"
     )
-  )
+  ),
+  relation_types = list(list(
+    type = "Anaphora",
+    labels = c("Anaphora", "Ana"),
+    dashArray = "3,3",
+    color = "purple",
+    args = list(
+      list(role = "Anaphor", targets = "Person"),
+      list(role = "Entity", targets = "Person")
+    )
+   ))
 )
 if (interactive()) a <- bradget(doc_data = doc_data, coll_data = coll_data)
 
@@ -116,13 +142,25 @@ library(NLP)
 merkel_min <- merkel
 merkel_min$annotation <- merkel$annotation[merkel$annotation$type == "ner"]
 d <- as.BratDocData(merkel_min)
+d[["relations"]] <- list()
 collData <- list(
   entity_types = list(list(
     type = "ner",
     labels = c("Named Entity", "NE"),
     bgColor = "#7fa2ff",
-    borderColor = "darken"
-  ))
+    borderColor = "darken",
+    arcs = list(list(targets = list("ner")))
+  )),
+  relation_types = list(list(
+    type = "Anaphora",
+    labels = c("Anaphora", "Ana"),
+    dashArray = "3,3",
+    color = "purple",
+    args = list(
+      list(role = "Anaphor", targets = "ner"),
+      list(role = "Entity", targets = "ner")
+    )
+   ))
 )
 if (interactive()) bradget(doc_data = d, coll_data = collData)
 }

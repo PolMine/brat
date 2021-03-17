@@ -44,9 +44,13 @@ HTMLWidgets.widget({
         document.data.docData.collection = null;
         dispatcher.post('collectionLoaded', [document.data.collData]);
         dispatcher.post('requestRenderData', [document.data.docData]);
+        
         // END adapted from Util.embed() in util.js 
         
         anno_ui = AnnotatorUI(dispatcher, visualizer.svg);
+        
+        dispatcher.post('collectionLoaded', [document.data.collData]);
+        dispatcher.post('requestRenderData', [document.data.docData]);
 
       },
       

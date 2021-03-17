@@ -383,7 +383,7 @@ var AnnotatorUI = (function($, window, undefined) {
 
       var onMouseDown = function(evt) {
         dragStartedAt = evt; // XXX do we really need the whole evt?
-        if (!that.user || arcDragOrigin) return;
+        if (arcDragOrigin) return;
         var target = $(evt.target);
         var id;
         // is it arc drag start?
@@ -403,7 +403,6 @@ var AnnotatorUI = (function($, window, undefined) {
             // show the possible targets
             var span = data.spans[arcDragOrigin] || {};
             var spanDesc = spanTypes[span.type] || {};
-
             // separate out possible numeric suffix from type for highight
             // (instead of e.g. "Theme3", need to look for "Theme")
             var noNumArcType = stripNumericSuffix(arcOptions && arcOptions.type);
@@ -2035,9 +2034,20 @@ var AnnotatorUI = (function($, window, undefined) {
                 collection: coll,
                 'document': doc
               };
-              $('#arc_origin').text(Util.spanDisplayForm(spanTypes, originSpan.type)+' ("'+originSpan.text+'")');
-              $('#arc_target').text(Util.spanDisplayForm(spanTypes, targetSpan.type)+' ("'+targetSpan.text+'")');
-              fillArcTypesAndDisplayForm(evt, originSpan.type, targetSpan.type);
+              // BEGIN edit Andreas Blaette
+              document.data.docData.relations.push(
+                [
+                  'R' + (document.data.docData.relations.length + 1),
+                  'Anaphora',
+                  [['Anaphor', originSpan.id], ['Entity', targetSpan.id]]
+                ]
+              );
+              dispatcher.post('requestRenderData', [document.data.docData]);
+              // END edit Andreas Blaette
+              
+              // $('#arc_origin').text(Util.spanDisplayForm(spanTypes, originSpan.type)+' ("'+originSpan.text+'")');
+              // $('#arc_target').text(Util.spanDisplayForm(spanTypes, targetSpan.type)+' ("'+targetSpan.text+'")');
+              // fillArcTypesAndDisplayForm(evt, originSpan.type, targetSpan.type);
               // for precise timing, log dialog display to user.
               dispatcher.post('logAction', ['arcSelected']);
             }

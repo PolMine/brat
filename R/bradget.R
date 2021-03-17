@@ -17,7 +17,8 @@
 #'     list('T3', 'Person', list(c(37, 40))),
 #'     list('T4', 'Person', list(c(50, 61))),
 #'     list('T5', 'Person', list(c(64, 68)))
-#'   )
+#'   ),
+#'   relations = list()
 #' )
 #' coll_data <- list(
 #'   entity_types = list(
@@ -25,7 +26,8 @@
 #'       type = "Person",
 #'       labels = c("Person", "Per"),
 #'       bgColor = RColorBrewer::brewer.pal(8, "Accent")[1],
-#'       borderColor = "darken"
+#'       borderColor = "darken",
+#'       arcs = list(list(targets = list("Person")))
 #'     ),
 #'     list(
 #'       type = "Organization",
@@ -39,7 +41,17 @@
 #'       bgColor = RColorBrewer::brewer.pal(8, "Accent")[3],
 #'       borderColor = "darken"
 #'     )
-#'   )
+#'   ),
+#'   relation_types = list(list(
+#'     type = "Anaphora",
+#'     labels = c("Anaphora", "Ana"),
+#'     dashArray = "3,3",
+#'     color = "purple",
+#'     args = list(
+#'       list(role = "Anaphor", targets = "Person"),
+#'       list(role = "Entity", targets = "Person")
+#'     )
+#'    ))
 #' )
 #' if (interactive()) a <- bradget(doc_data = doc_data, coll_data = coll_data)
 #' 
@@ -49,13 +61,25 @@
 #' merkel_min <- merkel
 #' merkel_min$annotation <- merkel$annotation[merkel$annotation$type == "ner"]
 #' d <- as.BratDocData(merkel_min)
+#' d[["relations"]] <- list()
 #' collData <- list(
 #'   entity_types = list(list(
 #'     type = "ner",
 #'     labels = c("Named Entity", "NE"),
 #'     bgColor = "#7fa2ff",
-#'     borderColor = "darken"
-#'   ))
+#'     borderColor = "darken",
+#'     arcs = list(list(targets = list("ner")))
+#'   )),
+#'   relation_types = list(list(
+#'     type = "Anaphora",
+#'     labels = c("Anaphora", "Ana"),
+#'     dashArray = "3,3",
+#'     color = "purple",
+#'     args = list(
+#'       list(role = "Anaphor", targets = "ner"),
+#'       list(role = "Entity", targets = "ner")
+#'     )
+#'    ))
 #' )
 #' if (interactive()) bradget(doc_data = d, coll_data = collData)
 #' @importFrom shinyjs useShinyjs extendShinyjs js
