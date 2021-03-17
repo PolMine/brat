@@ -22,4 +22,8 @@ millenium_declaration_annotated <- AnnotatedPlainTextDocument(
   meta = list()
 )
 
-save(millenium_declaration_annotated, file = "~/Lab/github/brat/data/millenium_declaration.RData")
+save(
+  millenium_declaration_annotated,
+  file = "~/Lab/github/brat/data/millenium_declaration.RData",
+  compress = "xz"
+)

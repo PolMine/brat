@@ -41,10 +41,27 @@
 #'     )
 #'   )
 #' )
-#' a <- bradget(doc_data = doc_data, coll_data = coll_data)
+#' if (interactive()) a <- bradget(doc_data = doc_data, coll_data = coll_data)
+#' 
+#' # A second example 
+#' 
+#' library(NLP)
+#' merkel_min <- merkel
+#' merkel_min$annotation <- merkel$annotation[merkel$annotation$type == "ner"]
+#' d <- as.BratDocData(merkel_min)
+#' collData <- list(
+#'   entity_types = list(list(
+#'     type = "ner",
+#'     labels = c("Named Entity", "NE"),
+#'     bgColor = "#7fa2ff",
+#'     borderColor = "darken"
+#'   ))
+#' )
+#' if (interactive()) bradget(doc_data = d, coll_data = collData)
 #' @importFrom shinyjs useShinyjs extendShinyjs js
-#' @importFrom NLP Annotation
+#' @importFrom NLP Annotation AnnotatedPlainTextDocument String
 #' @importFrom shinyWidgets prettyRadioButtons
+#' @importFrom htmltools div
 #' @return A `AnnotatedPlainTextDocument` object as defined in the NLP package.
 bradget <- function(doc_data, coll_data) { 
   

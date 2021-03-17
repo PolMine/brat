@@ -9,18 +9,27 @@ setOldClass("BratDocData")
 NULL
 
 #' @export
-is.BratDocData <- function(x){
-  x
+#' @examples
+#' library(NLP)
+#' merkel_min <- merkel
+#' 
+#' # We do not want to show all annotations
+#' merkel_min$annotation <- merkel$annotation[merkel$annotation$type == "ner"]
+#' d <- as.BratDocData(merkel_min)
+#' @rdname BratDocData
+#' @export as.BratDocData
+as.BratDocData <- function(x){
+  a <- x$annotation
+  list(
+    text = x$content,
+    entities = lapply(
+      1L:length(a),
+      function(i)
+        list(
+          sprintf("T%d", i),
+          a[[i]]$type,
+          list(c(a[[i]]$start - 1L, a[[i]]$end)) # JavaScript indexing is zero-based
+        )
+    )
+  )
 }
-
-#' @export
-as.BratDocData <- function(x, what = "POS"){
-  if (what == "POS"){
-    
-  }
-  
-  sapply(subset(NLP::annotation(x), type == "word")$features, `[[`, "POS")
-  NLP::features(millenium_declaration_annotated, "sentence")
-  
-}
-

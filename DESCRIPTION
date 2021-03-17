@@ -13,9 +13,12 @@ Imports:
     htmlwidgets,
     shiny,
     miniUI,
-    shinyjs
+    shinyjs,
+    htmltools,
+    shinyWidgets
 Suggests:
-    knitr
+    knitr,
+    RColorBrewer
 VignetteBuilder: knitr
 LazyData: yes
 License: GPL-3

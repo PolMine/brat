@@ -2,7 +2,6 @@
 #' 
 #' This is a lightweight wrapper for the brat annotation tool.
 #' @export brat
-#' @param x Any kind of input.
 #' @aliases brat-package brat
 #' @docType package
 #' @name brat
@@ -12,8 +11,8 @@
 NULL
 
 
-#' @param document_data Data to be passed into widget.
-#' @param collection_data Collection data.
+#' @param doc_data Data to be passed into widget.
+#' @param coll_data Collection data.
 #' @param width The width of the widget.
 #' @param height The height of the widget.
 #' @param outputId The ID of the widget.
@@ -40,7 +39,23 @@ NULL
 #'     borderColor = "darken"
 #'   ))
 #' )
-#' brat(doc_data = data, coll_data = collData)
+#' if (interactive()) brat(doc_data = data, coll_data = collData)
+#' 
+#' # A second example
+#' 
+#' library(NLP)
+#' merkel_min <- merkel
+#' merkel_min$annotation <- merkel$annotation[merkel$annotation$type == "ner"]
+#' d <- as.BratDocData(merkel_min)
+#' collData <- list(
+#'   entity_types = list(list(
+#'     type = "ner",
+#'     labels = c("Named Entity", "NE"),
+#'     bgColor = "#7fa2ff",
+#'     borderColor = "darken"
+#'   ))
+#' )
+#' if (interactive()) brat(doc_data = d, coll_data = collData)
 brat <- function(doc_data = list(), coll_data = list(), width = NULL, height = NULL) {
   
   x <- list(docData = doc_data, collData = coll_data)
@@ -71,3 +86,9 @@ renderBrat <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @rdname millenium_declaration 
 #' @format A `AnnotatedPlainTextDocument` object as defined in the NLP package.
 "millenium_declaration_annotated"
+
+#' Annotated Speech of Angela Merkel
+#' 
+#' @rdname merkel
+#' @format A `AnnotatedPlainTextDocument` object as defined in the NLP package.
+"merkel"

@@ -33,12 +33,9 @@ bradget(doc_data, coll_data)
 \item{env}{An environment.}
 
 \item{quoted}{A \code{logical} value.}
-
-\item{x}{Any kind of input.}
-
-\item{document_data}{Data to be passed into widget.}
-
-\item{collection_data}{Collection data.}
+}
+\value{
+A \code{AnnotatedPlainTextDocument} object as defined in the NLP package.
 }
 \description{
 This is a lightweight wrapper for the brat annotation tool.
@@ -62,7 +59,23 @@ collData <- list(
     borderColor = "darken"
   ))
 )
-brat(doc_data = data, coll_data = collData)
+if (interactive()) brat(doc_data = data, coll_data = collData)
+
+# A second example
+
+library(NLP)
+merkel_min <- merkel
+merkel_min$annotation <- merkel$annotation[merkel$annotation$type == "ner"]
+d <- as.BratDocData(merkel_min)
+collData <- list(
+  entity_types = list(list(
+    type = "ner",
+    labels = c("Named Entity", "NE"),
+    bgColor = "#7fa2ff",
+    borderColor = "darken"
+  ))
+)
+if (interactive()) brat(doc_data = d, coll_data = collData)
 doc_data <- list(
   text = "Ed O'Kelley was the man who shot the man who shot Jesse James.\n What a guy. He should be hanged.",
   entities = list(
@@ -95,7 +108,23 @@ coll_data <- list(
     )
   )
 )
-bradget(doc_data = doc_data, coll_data = coll_data)
+if (interactive()) a <- bradget(doc_data = doc_data, coll_data = coll_data)
+
+# A second example 
+
+library(NLP)
+merkel_min <- merkel
+merkel_min$annotation <- merkel$annotation[merkel$annotation$type == "ner"]
+d <- as.BratDocData(merkel_min)
+collData <- list(
+  entity_types = list(list(
+    type = "ner",
+    labels = c("Named Entity", "NE"),
+    bgColor = "#7fa2ff",
+    borderColor = "darken"
+  ))
+)
+if (interactive()) bradget(doc_data = d, coll_data = collData)
 }
 \author{
 Andreas Blaette

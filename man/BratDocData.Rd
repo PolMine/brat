@@ -2,10 +2,22 @@
 % Please edit documentation in R/data.R
 \name{BratDocData}
 \alias{BratDocData}
+\alias{as.BratDocData}
 \title{Get input for brat HTML widget}
+\usage{
+as.BratDocData(x)
+}
 \arguments{
 \item{x}{An object to be transformed.}
 }
 \description{
 Get input for brat HTML widget
+}
+\examples{
+library(NLP)
+merkel_min <- merkel
+
+# We do not want to show all annotations
+merkel_min$annotation <- merkel$annotation[merkel$annotation$type == "ner"]
+d <- as.BratDocData(merkel_min)
 }
