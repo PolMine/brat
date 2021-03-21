@@ -1,25 +1,18 @@
 #' Brat HTML widget 
 #' 
-#' @param doc_data bla bla
+#' @param txt_file File with plan text of document to be annotated.
+#' @param ann_file File with annotations (brat standoff format). If not stated
+#'   explicitly, the file is assumed to be in the same directory as txt file yet
+#'   with *.ann file extension.
 #' @param coll_data bla bla
 #' @importFrom miniUI miniPage miniContentPanel gadgetTitleBar miniButtonBlock
 #'   miniTabstripPanel miniTabPanel
 #' @importFrom shiny tags runGadget paneViewer textAreaInput observeEvent
-#'   stopApp reactiveValues icon observe actionButton
+#'   stopApp observe actionButton
+#' @importFrom xfun with_ext
 #' @export bradget
 #' @rdname brat
 #' @examples 
-#' doc_data <- list(
-#'   text = "Ed O'Kelley was the man who shot the man who shot Jesse James.\n What a guy. He should be hanged.",
-#'   entities = list(
-#'     list('T1', 'Person', list(c(0, 11))),
-#'     list('T2', 'Person', list(c(20, 23))),
-#'     list('T3', 'Person', list(c(37, 40))),
-#'     list('T4', 'Person', list(c(50, 61))),
-#'     list('T5', 'Person', list(c(64, 68)))
-#'   ),
-#'   relations = list()
-#' )
 #' coll_data <- list(
 #'   entity_types = list(
 #'     list(
@@ -53,15 +46,26 @@
 #'     )
 #'    ))
 #' )
-#' if (interactive()) a <- bradget(doc_data = doc_data, coll_data = coll_data)
+#' 
+#' txt_src <- system.file(package = "brat", "extdata", "sample_data", "edokelley.txt")
+#' ann_src <- system.file(package = "brat", "extdata", "sample_data", "edokelley.ann")
+#' txt_file <- file.path(tempdir(), "edokelley.txt")
+#' ann_file <- file.path(tempdir(), "edokelley.ann")
+#' file.copy(txt_src, txt_file)
+#' file.copy(ann_src, ann_file)
+#' 
+#' if (interactive()) bradget(txt_file = txt_file, coll_data = coll_data)
 #' 
 #' # A second example 
 #' 
 #' library(NLP)
 #' merkel_min <- merkel
 #' merkel_min$annotation <- merkel$annotation[merkel$annotation$type == "ner"]
-#' d <- as.BratDocData(merkel_min)
-#' d[["relations"]] <- list()
+#' 
+#' ann_file <- write_ann_file(x = as.doc_data(merkel_min))
+#' txt_file <- with_ext(ann_file, ".txt")
+#' cat(merkel_min$content, file = txt_file)
+#' 
 #' collData <- list(
 #'   entity_types = list(list(
 #'     type = "ner",
@@ -81,17 +85,18 @@
 #'     )
 #'    ))
 #' )
-#' if (interactive()) bradget(doc_data = d, coll_data = collData)
+#' 
+#' if (interactive()) bradget(txt_file = txt_file, coll_data = collData)
 #' @importFrom shinyjs useShinyjs extendShinyjs js
 #' @importFrom NLP Annotation AnnotatedPlainTextDocument String
 #' @importFrom shinyWidgets prettyRadioButtons
 #' @importFrom htmltools div
 #' @return A `AnnotatedPlainTextDocument` object as defined in the NLP package.
-bradget <- function(doc_data, coll_data) { 
+bradget <- function(txt_file, ann_file = with_ext(txt_file, "ann"), coll_data) { 
   
-  widget <- brat(doc_data = doc_data, coll_data = coll_data)
-  values <- reactiveValues()
-  
+  doc_data <- read_doc_data(txt_file = txt_file, ann_file = ann_file)
+  bridget <- brat(doc_data = doc_data, coll_data = coll_data)
+
   ui <- miniPage(
     tags$style(
       ".buttongroup {align-items: center; justify-content: center; background-color: #f2f2f2; padding: 0 6px; display: flex; flex: none; border-top: 1px solid #ddd;}"
@@ -112,27 +117,19 @@ bradget <- function(doc_data, coll_data) {
   
   server <- function(input, output, session) {
     
-    output$brat <- renderBrat(widget)
+    output$brat <- renderBrat(bridget)
     
     observeEvent(input$type, js$setCode(input$type))
-
+    
     observeEvent(
-      input$done,
-      stopApp(
-        returnValue = AnnotatedPlainTextDocument(
-          s = String(doc_data[["text"]]),
-          a = Annotation(
-            id = sapply(
-              unlist(input$annotations[["ID"]]),
-              function(id) as.integer(gsub("^.*?(\\d+).*?$", "\\1", id))
-            ),
-            type = unlist(input$annotations[["type"]]),
-            start = unlist(input$annotations[["left"]]),
-            end = unlist(input$annotations[["right"]])
-          )
-        )
-      )
+      input$annotations_updated,
+      {
+        f <- write_ann_file(input$document_data, ann_file = ann_file)
+        message("... writing annotations file: ", f)
+      }
     )
+
+    observeEvent(input$done,stopApp(returnValue = ann_file))
   }
   
   runGadget(ui, server, viewer = paneViewer())

@@ -1,0 +1,5 @@
+T1  Person  0 11
+T2  Person  20  23
+T3  Person  37  40
+T4  Person  50  61
+R1  Anaphora  Anaphor:T2  Entity:T1

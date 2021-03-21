@@ -21,39 +21,12 @@ NULL
 #' @export
 #' @importFrom htmlwidgets createWidget
 #' @examples 
-#' data <- list(
-#'   text = "Ed O'Kelley was the man who shot the man who shot Jesse James.\n What a guy. He should be hanged.",
-#'   entities = list(
-#'     list('T1', 'Person', list(c(0, 11))),
-#'     list('T2', 'Person', list(c(20, 23))),
-#'     list('T3', 'Person', list(c(37, 40))),
-#'     list('T4', 'Person', list(c(50, 61))),
-#'     list('T5', 'Person', list(c(64, 68)))
-#'   ),
-#'   relations = list(
-#'     list('R1', 'Anaphora', list(list('Anaphor', 'T2'), list('Entity', 'T1')))
+#' if (interactive()){
+#'   brat(
+#'     doc_data = example_doc_data,
+#'     coll_data = example_coll_data
 #'   )
-#' )
-#' collData <- list(
-#'   entity_types = list(list(
-#'     type = "Person",
-#'     labels = c("Person", "Per"),
-#'     bgColor = "#7fa2ff",
-#'     borderColor = "darken",
-#'     arcs = list(list(targets = list("Person")))
-#'   )),
-#'   relation_types = list(list(
-#'     type = "Anaphora",
-#'     labels = c("Anaphora", "Ana"),
-#'     dashArray = "3,3",
-#'     color = "purple",
-#'     args = list(
-#'       list(role = "Anaphor", targets = "Person"),
-#'       list(role = "Entity", targets = "Person")
-#'     )
-#'    ))
-#' )
-#' if (interactive()) brat(doc_data = data, coll_data = collData)
+#' }
 #' 
 #' # A second example
 #' 
@@ -106,3 +79,11 @@ renderBrat <- function(expr, env = parent.frame(), quoted = FALSE) {
 #' @rdname merkel
 #' @format A `AnnotatedPlainTextDocument` object as defined in the NLP package.
 "merkel"
+
+#' Brat example data
+#' @rdname brat_example_data
+"example_doc_data"
+
+#' Brat example data
+#' @rdname brat_example_data
+"example_coll_data"

@@ -15,10 +15,10 @@ bratOutput(outputId, width = "100\%", height = "400px")
 
 renderBrat(expr, env = parent.frame(), quoted = FALSE)
 
-bradget(doc_data, coll_data)
+bradget(txt_file, ann_file = with_ext(txt_file, "ann"), coll_data)
 }
 \arguments{
-\item{doc_data}{bla bla}
+\item{doc_data}{Data to be passed into widget.}
 
 \item{coll_data}{bla bla}
 
@@ -33,6 +33,12 @@ bradget(doc_data, coll_data)
 \item{env}{An environment.}
 
 \item{quoted}{A \code{logical} value.}
+
+\item{txt_file}{File with plan text of document to be annotated.}
+
+\item{ann_file}{File with annotations (brat standoff format). If not stated
+explicitly, the file is assumed to be in the same directory as txt file yet
+with *.ann file extension.}
 }
 \value{
 A \code{AnnotatedPlainTextDocument} object as defined in the NLP package.
@@ -41,39 +47,12 @@ A \code{AnnotatedPlainTextDocument} object as defined in the NLP package.
 This is a lightweight wrapper for the brat annotation tool.
 }
 \examples{
-data <- list(
-  text = "Ed O'Kelley was the man who shot the man who shot Jesse James.\n What a guy. He should be hanged.",
-  entities = list(
-    list('T1', 'Person', list(c(0, 11))),
-    list('T2', 'Person', list(c(20, 23))),
-    list('T3', 'Person', list(c(37, 40))),
-    list('T4', 'Person', list(c(50, 61))),
-    list('T5', 'Person', list(c(64, 68)))
-  ),
-  relations = list(
-    list('R1', 'Anaphora', list(list('Anaphor', 'T2'), list('Entity', 'T1')))
+if (interactive()){
+  brat(
+    doc_data = example_doc_data,
+    coll_data = example_coll_data
   )
-)
-collData <- list(
-  entity_types = list(list(
-    type = "Person",
-    labels = c("Person", "Per"),
-    bgColor = "#7fa2ff",
-    borderColor = "darken",
-    arcs = list(list(targets = list("Person")))
-  )),
-  relation_types = list(list(
-    type = "Anaphora",
-    labels = c("Anaphora", "Ana"),
-    dashArray = "3,3",
-    color = "purple",
-    args = list(
-      list(role = "Anaphor", targets = "Person"),
-      list(role = "Entity", targets = "Person")
-    )
-   ))
-)
-if (interactive()) brat(doc_data = data, coll_data = collData)
+}
 
 # A second example
 
@@ -90,17 +69,6 @@ collData <- list(
   ))
 )
 if (interactive()) brat(doc_data = d, coll_data = collData)
-doc_data <- list(
-  text = "Ed O'Kelley was the man who shot the man who shot Jesse James.\n What a guy. He should be hanged.",
-  entities = list(
-    list('T1', 'Person', list(c(0, 11))),
-    list('T2', 'Person', list(c(20, 23))),
-    list('T3', 'Person', list(c(37, 40))),
-    list('T4', 'Person', list(c(50, 61))),
-    list('T5', 'Person', list(c(64, 68)))
-  ),
-  relations = list()
-)
 coll_data <- list(
   entity_types = list(
     list(
@@ -134,15 +102,26 @@ coll_data <- list(
     )
    ))
 )
-if (interactive()) a <- bradget(doc_data = doc_data, coll_data = coll_data)
+
+txt_src <- system.file(package = "brat", "extdata", "sample_data", "edokelley.txt")
+ann_src <- system.file(package = "brat", "extdata", "sample_data", "edokelley.ann")
+txt_file <- file.path(tempdir(), "edokelley.txt")
+ann_file <- file.path(tempdir(), "edokelley.ann")
+file.copy(txt_src, txt_file)
+file.copy(ann_src, ann_file)
+
+if (interactive()) bradget(txt_file = txt_file, coll_data = coll_data)
 
 # A second example 
 
 library(NLP)
 merkel_min <- merkel
 merkel_min$annotation <- merkel$annotation[merkel$annotation$type == "ner"]
-d <- as.BratDocData(merkel_min)
-d[["relations"]] <- list()
+
+ann_file <- write_ann_file(x = as.doc_data(merkel_min))
+txt_file <- with_ext(ann_file, ".txt")
+cat(merkel_min$content, file = txt_file)
+
 collData <- list(
   entity_types = list(list(
     type = "ner",
@@ -162,7 +141,8 @@ collData <- list(
     )
    ))
 )
-if (interactive()) bradget(doc_data = d, coll_data = collData)
+
+if (interactive()) bradget(txt_file = txt_file, coll_data = collData)
 }
 \author{
 Andreas Blaette

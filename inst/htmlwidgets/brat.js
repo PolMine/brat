@@ -8,7 +8,6 @@ HTMLWidgets.widget({
     
     // el.style.overflow = "scroll";
     
-    document.annotations = {id: [], type: [], start: [], end: []}
     var dispatcher; // define here to make it available globally
     
     // still necessary? loading fonts is suppressed
@@ -22,21 +21,12 @@ HTMLWidgets.widget({
     return {
       renderValue: function(x) {
         
+        $('#' + el.id).empty().removeClass("hasSVG"); // creating new widget will not work otherwise
         document.data = x; // make it available globally
+        console.log(document.data);
         document.annotationsUpdated = 0;
         document.code = document.data.collData.entity_types[0].type
         
-        // turn document data into structure that can be returned easily
-        for (i = 0; i < document.data.docData.entities.length; i++){
-          document.annotations.id.push(document.data.docData.entities[i][0]);
-          document.annotations.type.push(document.data.docData.entities[i][1]);
-          document.annotations.start.push(document.data.docData.entities[i][2][0][0]);
-          document.annotations.end.push(document.data.docData.entities[i][2][0][1]);
-        };
-        if (window.HTMLWidgets.shinyMode){
-          Shiny.onInputChange('annotations', document.annotations);
-        }
-
         // BEGIN adapted from Util.embed() in util.js 
         dispatcher = new Dispatcher();
         var visualizer = new Visualizer(dispatcher, el.id, webFontURLs);
@@ -46,7 +36,6 @@ HTMLWidgets.widget({
         dispatcher.post('requestRenderData', [document.data.docData]);
         
         // END adapted from Util.embed() in util.js 
-        
         anno_ui = AnnotatorUI(dispatcher, visualizer.svg);
         
         dispatcher.post('collectionLoaded', [document.data.collData]);

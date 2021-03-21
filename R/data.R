@@ -1,11 +1,10 @@
 setOldClass("TextDocument")
-setOldClass("BratDocData")
 
 #' Get input for brat HTML widget
 #' 
 #' @param x An object to be transformed.
-#' @rdname BratDocData
-#' @name BratDocData
+#' @rdname doc_data
+#' @name doc_data
 NULL
 
 #' @export
@@ -15,10 +14,10 @@ NULL
 #' 
 #' # We do not want to show all annotations
 #' merkel_min$annotation <- merkel$annotation[merkel$annotation$type == "ner"]
-#' d <- as.BratDocData(merkel_min)
-#' @rdname BratDocData
-#' @export as.BratDocData
-as.BratDocData <- function(x){
+#' d <- as.doc_data(merkel_min)
+#' @rdname doc_data
+#' @export as.doc_data
+as.doc_data <- function(x){
   a <- x$annotation
   list(
     text = x$content,

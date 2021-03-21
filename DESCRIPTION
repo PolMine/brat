@@ -1,8 +1,8 @@
 Package: brat
 Type: Package
 Title: Experimental wrapper for the brat annotation tool
-Version: 0.0.1.9002
-Date: 2021-03-16
+Version: 0.0.1.9003
+Date: 2021-03-20
 Authors@R: person("Andreas", "Blaette", role = c("aut", "cre"), email = "andreas.blaette@uni-due.de")
 Description: Expose brat annotation tool. 
 Depends:
@@ -15,7 +15,9 @@ Imports:
     miniUI,
     shinyjs,
     htmltools,
-    shinyWidgets
+    shinyWidgets,
+    xfun,
+    shinythemes
 Suggests:
     knitr,
     RColorBrewer
@@ -27,5 +29,7 @@ Collate:
     'brat.R'
     'data.R'
     'bradget.R'
+    'annfile.R'
+    'brainy.R'
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)

@@ -1906,15 +1906,10 @@ var AnnotatorUI = (function($, window, undefined) {
             document.data.docData.entities.push([docId, document.code, [[selectedFrom, selectedTo]]]);
             dispatcher.post('requestRenderData', [document.data.docData]);
 
-            document.annotations.id.push(docId);
-            document.annotations.type.push(document.code);
-            document.annotations.start.push(selectedFrom);
-            document.annotations.end.push(selectedTo);
-
             document.annotationsUpdated++;
-
-            Shiny.onInputChange('annotations', document.annotations);
+            Shiny.onInputChange('document_data', document.data.docData);
             Shiny.onInputChange('annotations_updated', document.annotationsUpdated);
+            
           };
           // END Modification by Andreas Blaette
 
@@ -2042,6 +2037,11 @@ var AnnotatorUI = (function($, window, undefined) {
                   [['Anaphor', originSpan.id], ['Entity', targetSpan.id]]
                 ]
               );
+              
+              document.annotationsUpdated++;
+              Shiny.onInputChange('document_data', document.data.docData);
+              Shiny.onInputChange('annotations_updated', document.annotationsUpdated);
+
               dispatcher.post('requestRenderData', [document.data.docData]);
               // END edit Andreas Blaette
               
