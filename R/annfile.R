@@ -1,4 +1,10 @@
+#' Data conversion for brat
+#' 
+#' @param txt_file Plain text file with fulltext of document.
+#' @param ann_file A tab-separated file with annotations, brat standoff format.
+#' @rdname doc_data
 #' @export read_doc_data
+#' @examples
 #' txt_file <- system.file(package = "brat", "extdata", "sample_data", "edokelley.txt")
 #' ann_file <- system.file(package = "brat", "extdata", "sample_data", "edokelley.ann")
 #' doc_data <- read_doc_data(txt_file, ann_file)
@@ -21,8 +27,10 @@ read_doc_data <- function(txt_file, ann_file){
   )
 }
 
+#' @export write_ann_file
 #' @examples 
 #' write_ann_file(example_doc_data)
+#' @rdname doc_data
 write_ann_file <- function(x, ann_file = tempfile(fileext = ".ann")){
   entites <- lapply(
     x[["entities"]],
@@ -44,6 +52,8 @@ write_ann_file <- function(x, ann_file = tempfile(fileext = ".ann")){
 #' @examples 
 #' ann_file <- system.file(package = "brat", "extdata", "sample_data", "edokelley.ann")
 #' as.Annotation(ann_file)
+#' @rdname doc_data
+#' @export as.Annotation.character
 as.Annotation.character <- function(ann_file){
   doc <- read_doc_data(ann_file = ann_file)
   entities <- Annotation(

@@ -1,11 +1,10 @@
 #' Brat shiny HTML widget 
 #' 
-#' @param doc_dir 
-#' @param ann_file File with annotations (brat standoff format). If not stated
-#'   explicitly, the file is assumed to be in the same directory as txt file yet
-#'   with *.ann file extension.
+#' @param doc_dir Diretory with plaint text documents (*.txt) and annotation
+#'   files (*.ann).
 #' @param coll_data bla bla
-#' @importFrom shiny titlePanel sidebarLayout radioButtons reactiveValues
+#' @importFrom shiny titlePanel sidebarLayout radioButtons
+#'   reactiveValues fluidPage mainPanel selectInput shinyApp sidebarPanel
 #' @importFrom xfun with_ext sans_ext
 #' @importFrom shinythemes shinytheme
 #' @export brainy
@@ -55,7 +54,9 @@
 #' file.copy(ann_src, ann_file)
 #' 
 #' if (interactive()) brainy(doc_dir = doc_dir, coll_data = coll_data)
-#' brainy(doc_dir = "~/Lab/github/brat/inst/extdata/sample_data", coll_data = coll_data)
+#' if (interactive()){
+#'   brainy(doc_dir = "~/Lab/github/brat/inst/extdata/sample_data", coll_data = coll_data)
+#' }
 brainy <- function(doc_dir,  coll_data) { 
   
   txt_files <- sans_ext(basename(Sys.glob(file.path(doc_dir, "*.txt"))))
@@ -120,7 +121,7 @@ brainy <- function(doc_dir,  coll_data) {
 
     observeEvent(
       input$done,
-      stopApp(returnValue = ann_file)
+      stopApp()
     )
   }
   

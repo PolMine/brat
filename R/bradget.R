@@ -63,7 +63,7 @@
 #' merkel_min$annotation <- merkel$annotation[merkel$annotation$type == "ner"]
 #' 
 #' ann_file <- write_ann_file(x = as.doc_data(merkel_min))
-#' txt_file <- with_ext(ann_file, ".txt")
+#' txt_file <- xfun::with_ext(ann_file, ".txt")
 #' cat(merkel_min$content, file = txt_file)
 #' 
 #' collData <- list(

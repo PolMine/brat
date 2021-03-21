@@ -33,15 +33,15 @@ NULL
 #' library(NLP)
 #' merkel_min <- merkel
 #' merkel_min$annotation <- merkel$annotation[merkel$annotation$type == "ner"]
-#' d <- as.BratDocData(merkel_min)
-#' collData <- list(
-#'   entity_types = list(list(
-#'     type = "ner",
-#'     labels = c("Named Entity", "NE"),
-#'     bgColor = "#7fa2ff",
-#'     borderColor = "darken"
-#'   ))
-#' )
+#' # d <- as.BratDocData(merkel_min)
+#' # collData <- list(
+#' # entity_types = list(list(
+#' #    type = "ner",
+#' #    labels = c("Named Entity", "NE"),
+#' #     bgColor = "#7fa2ff",
+#' #    borderColor = "darken"
+#' #   ))
+#' # )
 #' if (interactive()) brat(doc_data = d, coll_data = collData)
 brat <- function(doc_data = list(), coll_data = list(), width = NULL, height = NULL) {
   

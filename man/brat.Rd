@@ -59,15 +59,15 @@ if (interactive()){
 library(NLP)
 merkel_min <- merkel
 merkel_min$annotation <- merkel$annotation[merkel$annotation$type == "ner"]
-d <- as.BratDocData(merkel_min)
-collData <- list(
-  entity_types = list(list(
-    type = "ner",
-    labels = c("Named Entity", "NE"),
-    bgColor = "#7fa2ff",
-    borderColor = "darken"
-  ))
-)
+# d <- as.BratDocData(merkel_min)
+# collData <- list(
+# entity_types = list(list(
+#    type = "ner",
+#    labels = c("Named Entity", "NE"),
+#     bgColor = "#7fa2ff",
+#    borderColor = "darken"
+#   ))
+# )
 if (interactive()) brat(doc_data = d, coll_data = collData)
 coll_data <- list(
   entity_types = list(
@@ -119,7 +119,7 @@ merkel_min <- merkel
 merkel_min$annotation <- merkel$annotation[merkel$annotation$type == "ner"]
 
 ann_file <- write_ann_file(x = as.doc_data(merkel_min))
-txt_file <- with_ext(ann_file, ".txt")
+txt_file <- xfun::with_ext(ann_file, ".txt")
 cat(merkel_min$content, file = txt_file)
 
 collData <- list(
