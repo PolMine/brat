@@ -19,19 +19,22 @@
 #'       labels = c("Person", "Per"),
 #'       bgColor = RColorBrewer::brewer.pal(8, "Accent")[1],
 #'       borderColor = "darken",
-#'       arcs = list(list(targets = list("Person")))
+#'       arcs = list(list(targets = list("Person"))),
+#'       children = list()
 #'     ),
 #'     list(
 #'       type = "Organization",
 #'       labels = c("Organization", "Org"),
 #'       bgColor = RColorBrewer::brewer.pal(8, "Accent")[2],
-#'       borderColor = "darken"
+#'       borderColor = "darken",
+#'       children = list()
 #'     ),
 #'     list(
 #'       type = "Location",
 #'       labels = c("Location", "Loc"),
 #'       bgColor = RColorBrewer::brewer.pal(8, "Accent")[3],
-#'       borderColor = "darken"
+#'       borderColor = "darken",
+#'       children = list()
 #'     )
 #'   ),
 #'   relation_types = list(list(
@@ -57,11 +60,12 @@
 #' if (interactive()){
 #'   brainy(doc_dir = "~/Lab/github/brat/inst/extdata/sample_data", coll_data = coll_data)
 #' }
+#' @export brainy
 brainy <- function(doc_dir,  coll_data) { 
   
   txt_files <- sans_ext(basename(Sys.glob(file.path(doc_dir, "*.txt"))))
 
-  ui <- fluidPage(
+  ui <- shiny::fluidPage(
     theme = shinytheme("cerulean"),
     useShinyjs(),
     extendShinyjs(

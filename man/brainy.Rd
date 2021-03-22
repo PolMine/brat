@@ -25,19 +25,22 @@ coll_data <- list(
       labels = c("Person", "Per"),
       bgColor = RColorBrewer::brewer.pal(8, "Accent")[1],
       borderColor = "darken",
-      arcs = list(list(targets = list("Person")))
+      arcs = list(list(targets = list("Person"))),
+      children = list()
     ),
     list(
       type = "Organization",
       labels = c("Organization", "Org"),
       bgColor = RColorBrewer::brewer.pal(8, "Accent")[2],
-      borderColor = "darken"
+      borderColor = "darken",
+      children = list()
     ),
     list(
       type = "Location",
       labels = c("Location", "Loc"),
       bgColor = RColorBrewer::brewer.pal(8, "Accent")[3],
-      borderColor = "darken"
+      borderColor = "darken",
+      children = list()
     )
   ),
   relation_types = list(list(

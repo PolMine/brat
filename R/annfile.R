@@ -49,13 +49,21 @@ write_ann_file <- function(x, ann_file = tempfile(fileext = ".ann")){
   ann_file
 }
 
+#' @details The `as.Annotation()` S3 method is re-imported from the NLP package.
+#' @rdname doc_data
+#' @export
+NLP::as.Annotation
+
+
+#' @param ... Included as a matter of consistency with `NLP::as.Annotation()`.
 #' @examples 
 #' ann_file <- system.file(package = "brat", "extdata", "sample_data", "edokelley.ann")
-#' as.Annotation(ann_file)
+#' as.Annotation(x = ann_file)
 #' @rdname doc_data
-#' @export as.Annotation.character
-as.Annotation.character <- function(ann_file){
-  doc <- read_doc_data(ann_file = ann_file)
+#' @importFrom NLP as.Annotation
+#' @export
+as.Annotation.character <- function(x, ...){
+  doc <- read_doc_data(ann_file = x)
   entities <- Annotation(
     id = as.integer(gsub("^.*?(\\d+).*?$", "\\1", sapply(doc[["entities"]], `[[`, 1L))),
     type = sapply(doc[["entities"]], `[[`, 2L),
