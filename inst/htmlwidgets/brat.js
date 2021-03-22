@@ -7,7 +7,6 @@ HTMLWidgets.widget({
   factory: function(el, width, height) {
     
 
-    var dispatcher; // define here to make it available globally
     var visualizer;
     document.data = undefined;
     document.annotationsUpdated = 0;
@@ -30,23 +29,25 @@ HTMLWidgets.widget({
         document.code = document.data.collData.entity_types[0].type
         
         // BEGIN adapted from Util.embed() in util.js 
-        dispatcher = new Dispatcher();
-        visualizer = new Visualizer(dispatcher, el.id, webFontURLs);
+        document.dispatcher = new Dispatcher();
+        visualizer = new Visualizer(document.dispatcher, el.id, webFontURLs);
 
         document.data.docData.collection = null;
-        dispatcher.post('collectionLoaded', [document.data.collData]);
-        dispatcher.post('requestRenderData', [document.data.docData]);
+        document.dispatcher.post('collectionLoaded', [document.data.collData]);
+        document.dispatcher.post('requestRenderData', [document.data.docData]);
         
         // END adapted from Util.embed() in util.js 
-        AnnotatorUI(dispatcher, visualizer.svg);
+        AnnotatorUI(document.dispatcher, visualizer.svg);
         
-        dispatcher.post('collectionLoaded', [document.data.collData]);
-        dispatcher.post('requestRenderData', [document.data.docData]);
+        el.focus()
+        
+        document.dispatcher.post('collectionLoaded', [document.data.collData]);
+        document.dispatcher.post('requestRenderData', [document.data.docData]);
 
       },
       
       resize: function(width, height) {
-        dispatcher.post('requestRenderData', [document.data.docData]);
+        document.dispatcher.post('requestRenderData', [document.data.docData]);
       }
 
     };

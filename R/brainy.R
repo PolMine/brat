@@ -3,13 +3,14 @@
 #' @param doc_dir Diretory with plaint text documents (*.txt) and annotation
 #'   files (*.ann).
 #' @param coll_data bla bla
-#' @importFrom shiny titlePanel sidebarLayout radioButtons
+#' @importFrom shiny titlePanel sidebarLayout radioButtons 
 #'   reactiveValues fluidPage mainPanel selectInput shinyApp sidebarPanel
 #' @importFrom xfun with_ext sans_ext
 #' @importFrom shinythemes shinytheme
 #' @export brainy
 #' @rdname brainy
 #' @examples 
+#' library(brat)
 #' doc_dir <- system.file(package = "brat", "extdata", "sample_data")
 #' 
 #' coll_data <- list(
@@ -56,7 +57,7 @@
 #' file.copy(txt_src, txt_file)
 #' file.copy(ann_src, ann_file)
 #' 
-#' if (interactive()) brainy(doc_dir = doc_dir, coll_data = coll_data)
+#' # if (interactive()) brainy(doc_dir = doc_dir, coll_data = coll_data)
 #' if (interactive()){
 #'   brainy(doc_dir = "~/Lab/github/brat/inst/extdata/sample_data", coll_data = coll_data)
 #' }
@@ -69,8 +70,14 @@ brainy <- function(doc_dir,  coll_data) {
     theme = shinytheme("cerulean"),
     useShinyjs(),
     extendShinyjs(
-      text = 'shinyjs.setCode = function(code){document.code = code}',
-      functions = c("msg", "printDoc", "setText", "setEntities", "setCode", "requestRenderData")
+      text = "
+        shinyjs.requestRenderData = function(x){
+          document.data.docData = x[0];
+          document.dispatcher.post('requestRenderData', [document.data.docData]);
+        };
+        shinyjs.setCode = function(code){document.code = code}
+      ",
+      functions = c("setDocData", "setCode", "requestRenderData")
     ),
     
     titlePanel(title = "brainy the brat shiny app"),
@@ -99,18 +106,23 @@ brainy <- function(doc_dir,  coll_data) {
   
   server <- function(input, output, session){
     
+    values <- shiny::reactiveValues()
+
     observeEvent(input$type, js$setCode(input$type))
     
     observeEvent(
       input$doc_selected,
       {
-        txt_file <- file.path(doc_dir, paste(input$doc_selected, "txt", sep = "."))
-        doc_data <- read_doc_data(
-          txt_file = file.path(doc_dir, paste(input$doc_selected, "txt", sep = ".")),
-          ann_file = with_ext(txt_file, "ann")
-        )
-        bridget <- brat(doc_data = doc_data, coll_data = coll_data)
-        output$brat <- renderBrat(bridget)
+        fname <- file.path(doc_dir, paste(input$doc_selected, "txt", sep = "."))
+        doc_data <- read_doc_data(txt_file = fname, ann_file = with_ext(fname, "ann"))
+        if (length(values$doc_rendered) == 0L){
+          bridget <- brat(doc_data = doc_data, coll_data = coll_data)
+          output$brat <- renderBrat(bridget)
+          values$doc_rendered <- input$doc_selected
+        } else {
+          js$requestRenderData(doc_data)
+          values$doc_rendered <- input$doc_selected
+        }
       }
     )
     
