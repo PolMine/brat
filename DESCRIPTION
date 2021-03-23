@@ -1,10 +1,16 @@
 Package: brat
 Type: Package
-Title: Experimental wrapper for the brat annotation tool
-Version: 0.0.1.9003
-Date: 2021-03-20
+Title: HTML widget, shiny gadget and shiny app to expose the visualization and annotation 
+  functionality of the brat rapid annotation tool for pure R annotation workflows
+Version: 0.0.2
+Date: 2021-03-23
 Authors@R: person("Andreas", "Blaette", role = c("aut", "cre"), email = "andreas.blaette@uni-due.de")
-Description: Expose brat annotation tool. 
+Description: This package exposes the visualization and annotation functionality of the 'brat'
+  rapid annotation tool (<https://brat.nlplab.org/>). The purpose is facilitate implementing advanced 
+  pure R annotation  workflows in a lightweight manner. Based on an HTML widget 'brat', a HTML gadget
+  ('bradget') and a shiny app ('brainy') are tools offered for annotating entities and relations in
+  single or multiple documents. The  JavaScript code of 'brat' and the JavaScript libraries 'jQuery',
+  'jQuery SVG' and 'sprintf' are MIT-licensed. The license of the R package is GPL-3.
 Depends:
     R (>= 3.5.0),
     methods
@@ -23,7 +29,7 @@ Suggests:
     RColorBrewer
 VignetteBuilder: knitr
 LazyData: yes
-License: MIT + file LICENSE
+License: GPL-3 + file LICENSE
 Encoding: UTF-8
 Collate:
     'brat.R'

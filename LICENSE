@@ -1,8 +1,22 @@
-This package, brat, jQuery, jQuery are published under a MIT license (see text below)
+## License of the 'brat' R package
 
-----------------------------
+The license of the R package is the GNU General Public License 3, 
+see: https://www.gnu.org/licenses/gpl-3.0.html
 
-Copyright (c) <year> <copyright holders>
+
+## License of JavaScript code included
+
+The JavaScript code of brat, jQuery, SVG for jQuery and sprintf is
+published under the MIT License. Copyrights are as follows:
+
+- brat: (c) 2010-2012 The brat contributors | https://brat.nlplab.org/
+- jQuery: (c) 2005, 2014 jQuery Foundation, Inc. | jquery.org/license
+- SVG for jQuery v1.5.0: (c) 2007-2015 Keith Wood | http://keith-wood.name/licence.html
+- sprintf.js: (c) 2010 Jakob Westhoff
+
+The content of the MIT License is as follows:
+
+Copyright <YEAR> <COPYRIGHT HOLDER>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
