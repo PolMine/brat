@@ -112,6 +112,7 @@ file.copy(ann_src, ann_file)
 
 if (interactive()) bradget(txt_file = txt_file, coll_data = coll_data)
 
+
 # A second example 
 
 library(NLP)

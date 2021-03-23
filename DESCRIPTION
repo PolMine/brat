@@ -23,7 +23,7 @@ Suggests:
     RColorBrewer
 VignetteBuilder: knitr
 LazyData: yes
-License: GPL-3
+License: MIT + file LICENSE
 Encoding: UTF-8
 Collate:
     'brat.R'

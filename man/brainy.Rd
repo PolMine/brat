@@ -4,19 +4,34 @@
 \alias{brainy}
 \title{Brat shiny HTML widget}
 \usage{
-brainy(doc_dir, coll_data)
+brainy(doc_dir, coll_data, theme = "paper")
 }
 \arguments{
 \item{doc_dir}{Diretory with plaint text documents (\emph{.txt) and annotation
 files (}.ann).}
 
-\item{coll_data}{bla bla}
+\item{coll_data}{Configuration of annotation scheme.}
+
+\item{theme}{The theme passed into shinythemes.}
 }
 \description{
 Brat shiny HTML widget
 }
 \examples{
-doc_dir <- system.file(package = "brat", "extdata", "sample_data")
+library(brat)
+
+# Prepare directory with .txt and .ann files: The package includes some 
+# sample files - we create a temporary copy
+
+doc_dir_pkg <- system.file(package = "brat", "extdata", "sample_data")
+doc_dir <- file.path(tempdir(), "brat")
+if (!dir.exists(doc_dir)) dir.create(doc_dir)
+if (length(list.files(doc_dir)) > 0L) file.remove(list.files(doc_dir, full.names = TRUE))
+for (file in list.files(doc_dir_pkg, full.names = TRUE)){
+  file.copy(from = file, to = file.path(doc_dir, basename(file)))
+}
+
+# Define collection data
 
 coll_data <- list(
   entity_types = list(
@@ -33,6 +48,7 @@ coll_data <- list(
       labels = c("Organization", "Org"),
       bgColor = RColorBrewer::brewer.pal(8, "Accent")[2],
       borderColor = "darken",
+      arcs = list(list(targets = list("Person"))),
       children = list()
     ),
     list(
@@ -40,30 +56,45 @@ coll_data <- list(
       labels = c("Location", "Loc"),
       bgColor = RColorBrewer::brewer.pal(8, "Accent")[3],
       borderColor = "darken",
+      arcs = list(list(targets = list("Person"))),
+      children = list()
+    ),
+    list(
+      type = "Date",
+      labels = c("Date", "Date"),
+      bgColor = RColorBrewer::brewer.pal(8, "Accent")[4],
+      borderColor = "darken",
+      arcs = list(list(targets = list("Person"))),
       children = list()
     )
   ),
-  relation_types = list(list(
-    type = "Anaphora",
-    labels = c("Anaphora", "Ana"),
-    dashArray = "3,3",
-    color = "purple",
-    args = list(
-      list(role = "Anaphor", targets = "Person"),
-      list(role = "Entity", targets = "Person")
+  relation_types = list(
+    list(
+      type = "Anaphora",
+      labels = c("Anaphora", "Ana"),
+      dashArray = "3,3",
+      color = "purple",
+      args = list(
+        list(role = "Anaphor", targets = "Person"),
+        list(role = "Entity", targets = "Person")
+      )
+     ),
+     list(
+      type = "Birthday",
+      labels = c("Birthday", "born"),
+      dashArray = "3,3",
+      color = "blue",
+      args = list(
+        list(role = "Anaphor", targets = "Person"),
+        list(role = "Entity", targets = "Person")
+      )
     )
-   ))
+  )
 )
 
-txt_src <- system.file(package = "brat", "extdata", "sample_data", "edokelley.txt")
-ann_src <- system.file(package = "brat", "extdata", "sample_data", "edokelley.ann")
-txt_file <- file.path(tempdir(), "edokelley.txt")
-ann_file <- file.path(tempdir(), "edokelley.ann")
-file.copy(txt_src, txt_file)
-file.copy(ann_src, ann_file)
+# Run brainy app (but only in interactive mode)
 
-if (interactive()) brainy(doc_dir = doc_dir, coll_data = coll_data)
 if (interactive()){
-  brainy(doc_dir = "~/Lab/github/brat/inst/extdata/sample_data", coll_data = coll_data)
+  brainy(doc_dir = doc_dir, coll_data = coll_data)
 }
 }

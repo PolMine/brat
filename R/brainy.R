@@ -3,8 +3,9 @@
 #' @param doc_dir Diretory with plaint text documents (*.txt) and annotation
 #'   files (*.ann).
 #' @param coll_data Configuration of annotation scheme.
+#' @param theme The theme passed into shinythemes.
 #' @importFrom shiny titlePanel sidebarLayout radioButtons reactiveValues
-#'   fluidPage mainPanel selectInput shinyApp sidebarPanel
+#'   fluidPage mainPanel selectInput shinyApp sidebarPanel icon br
 #' @importFrom xfun with_ext sans_ext
 #' @importFrom shinythemes shinytheme
 #' @export brainy
@@ -90,12 +91,12 @@
 #'   brainy(doc_dir = doc_dir, coll_data = coll_data)
 #' }
 #' @export brainy
-brainy <- function(doc_dir,  coll_data) { 
+brainy <- function(doc_dir,  coll_data, theme = "paper") { 
   
   txt_files <- sans_ext(basename(Sys.glob(file.path(doc_dir, "*.txt"))))
 
   ui <- shiny::fluidPage(
-    theme = shinytheme("cerulean"),
+    theme = shinytheme(theme),
     useShinyjs(),
     extendShinyjs(
       text = "
@@ -118,6 +119,10 @@ brainy <- function(doc_dir,  coll_data) {
           label = "Document Selection",
           choices = basename(sans_ext(txt_files))
         ),
+        actionButton("previous_doc", "", icon = icon("backward")),
+        actionButton("next_doc", "", icon = icon("forward")),
+        br(),
+        br(),
         radioButtons(
           inputId = "type",
           choices = sapply(coll_data[["entity_types"]], `[[`, "type"),
@@ -128,7 +133,7 @@ brainy <- function(doc_dir,  coll_data) {
           choices = sapply(coll_data[["relation_types"]], `[[`, "type"),
           label = "Relation Annotation"
         ),
-        actionButton("stop", "Stop")
+        actionButton("stop", "Stop", icon = icon("power-off"))
       ),
       
       mainPanel(
