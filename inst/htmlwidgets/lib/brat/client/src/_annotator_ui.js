@@ -1907,6 +1907,10 @@ var AnnotatorUI = (function($, window, undefined) {
             dispatcher.post('requestRenderData', [document.data.docData]);
 
             document.annotationsUpdated++;
+            Shiny.onInputChange(
+              'last_entity_annotated',
+              document.data.docData.entities[document.data.docData.entities.length - 1]
+            );
             Shiny.onInputChange('document_data', document.data.docData);
             Shiny.onInputChange('annotations_updated', document.annotationsUpdated);
             

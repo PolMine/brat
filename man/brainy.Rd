@@ -2,20 +2,44 @@
 % Please edit documentation in R/brainy.R
 \name{brainy}
 \alias{brainy}
-\title{Brat shiny HTML widget}
+\title{Brat shiny HTML app.}
 \usage{
 brainy(doc_dir, coll_data, theme = "paper")
 }
 \arguments{
-\item{doc_dir}{Diretory with plaint text documents (\emph{.txt) and annotation
-files (}.ann).}
+\item{doc_dir}{Diretory with plaint text documents (\emph{.txt), annotation files
+(}.ann) and rds files with \code{Annotation} objects stored using \code{saveRDS()}.}
 
 \item{coll_data}{Configuration of annotation scheme.}
 
 \item{theme}{The theme passed into shinythemes.}
 }
 \description{
-Brat shiny HTML widget
+Call brainy, the brat shiny app to annotate multiple documents.
+}
+\details{
+The function takes a document directory (\code{doc_dir}) as input. Plain text
+files present in the directory (.txt file extension) will be available
+as documents to be annotated.
+
+Annotations for these documents will be stored in the same directory using
+the brat standoff annotation format (.ann file extension). The name of the
+annotation file will be identical with text document, just using the .ann file
+extension. Annotation files that are present before annotating documents will
+be parsed and annotations are shown.
+
+If the document has already been tokenized, use the \code{Annotation} class of the
+NLP package to infuse this information for the annotation exercise. In this
+case, when creating a new annotation, the span of text highlighted will be
+checked against the tokenization and character offsets will be mapped on the
+existing tokenisation. This can also be useful for speeding up annotation,
+because annotators need not highlight the exact beginning and end of tokens
+to create an annotation that looks all right.
+
+Files with an existing token annotation are expected to have the same file
+name as the document, using an .rds file extension. These rds files are
+expected to be \code{Annotation} class objects that have been stored using
+\code{saveRDS()}.
 }
 \examples{
 library(brat)

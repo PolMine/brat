@@ -11,6 +11,7 @@ HTMLWidgets.widget({
     document.data = undefined;
     document.annotationsUpdated = 0;
     document.code = undefined;
+    document.lastEntityAnnotated = undefined;
     
     // still necessary? loading fonts is suppressed
     var webFontURLs = [
