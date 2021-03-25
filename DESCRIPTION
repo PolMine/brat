@@ -2,8 +2,8 @@ Package: brat
 Type: Package
 Title: HTML widget, shiny gadget and shiny app to expose the visualization and annotation 
   functionality of the brat rapid annotation tool for pure R annotation workflows
-Version: 0.0.2.9001
-Date: 2021-03-24
+Version: 0.0.2
+Date: 2021-03-25
 Authors@R: person("Andreas", "Blaette", role = c("aut", "cre"), email = "andreas.blaette@uni-due.de")
 Description: This package exposes the visualization and annotation functionality of the 'brat'
   rapid annotation tool (<https://brat.nlplab.org/>). The purpose is facilitate implementing advanced 

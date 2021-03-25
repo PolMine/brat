@@ -77,7 +77,7 @@ below to see their documentation.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
       </span>
     </div>
 
@@ -181,7 +181,7 @@ below to see their documentation.</p>
 <span class='no'>txt_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"brat"</span>, <span class='st'>"extdata"</span>, <span class='st'>"sample_data"</span>, <span class='st'>"edokelley.txt"</span>)
 <span class='no'>ann_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"brat"</span>, <span class='st'>"extdata"</span>, <span class='st'>"sample_data"</span>, <span class='st'>"edokelley.ann"</span>)
 <span class='no'>doc_data</span> <span class='kw'>&lt;-</span> <span class='fu'>read_doc_data</span>(<span class='no'>txt_file</span>, <span class='no'>ann_file</span>)
-<span class='fu'>write_ann_file</span>(<span class='no'>example_doc_data</span>)</div><div class='output co'>#&gt; [1] "/var/folders/m_/431fjnbs1t32_62d35wvs7pr0000gp/T//Rtmp9zCuGC/file24e14f168c17.ann"</div><div class='input'><span class='no'>ann_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"brat"</span>, <span class='st'>"extdata"</span>, <span class='st'>"sample_data"</span>, <span class='st'>"edokelley.ann"</span>)
+<span class='fu'>write_ann_file</span>(<span class='no'>example_doc_data</span>)</div><div class='output co'>#&gt; [1] "/var/folders/m_/431fjnbs1t32_62d35wvs7pr0000gp/T//RtmpabklwB/file2952eae7af3.ann"</div><div class='input'><span class='no'>ann_file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"brat"</span>, <span class='st'>"extdata"</span>, <span class='st'>"sample_data"</span>, <span class='st'>"edokelley.ann"</span>)
 <span class='fu'>as.Annotation</span>(<span class='kw'>x</span> <span class='kw'>=</span> <span class='no'>ann_file</span>)</div><div class='output co'>#&gt;  id type   start end features
 #&gt;   1 Person     0  11 
 #&gt;   2 Person    20  23 
