@@ -1,3 +1,8 @@
+# brat 0.0.2.9001
+
+* Auxiliary functions `entity()` and `relation()` facilitate the generation of entity and relation definitions for collection data.
+
+
 # brat 0.0.2
 
 * Documentation written for `brainy()`.

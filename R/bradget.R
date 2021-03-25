@@ -13,38 +13,14 @@
 #' @export bradget
 #' @rdname brat
 #' @examples 
+#' annotation_colors <- RColorBrewer::brewer.pal(8, "Accent")
 #' coll_data <- list(
 #'   entity_types = list(
-#'     list(
-#'       type = "Person",
-#'       labels = c("Person", "Per"),
-#'       bgColor = RColorBrewer::brewer.pal(8, "Accent")[1],
-#'       borderColor = "darken",
-#'       arcs = list(list(targets = list("Person")))
-#'     ),
-#'     list(
-#'       type = "Organization",
-#'       labels = c("Organization", "Org"),
-#'       bgColor = RColorBrewer::brewer.pal(8, "Accent")[2],
-#'       borderColor = "darken"
-#'     ),
-#'     list(
-#'       type = "Location",
-#'       labels = c("Location", "Loc"),
-#'       bgColor = RColorBrewer::brewer.pal(8, "Accent")[3],
-#'       borderColor = "darken"
-#'     )
-#'   ),
-#'   relation_types = list(list(
-#'     type = "Anaphora",
-#'     labels = c("Anaphora", "Ana"),
-#'     dashArray = "3,3",
-#'     color = "purple",
-#'     args = list(
-#'       list(role = "Anaphor", targets = "Person"),
-#'       list(role = "Entity", targets = "Person")
-#'     )
-#'    ))
+#'     entity("Person", bgColor = annotation_colors[1]),
+#'     entity("Organisaation", bgColor = annotation_colors[2]),
+#'     entity("Location", bgColor = annotation_colors[3]),
+#'     entity("Date", bgColor = annotation_colors[4])
+#'   )
 #' )
 #' 
 #' txt_src <- system.file(package = "brat", "extdata", "sample_data", "edokelley.txt")
@@ -68,23 +44,7 @@
 #' cat(merkel_min$content, file = txt_file)
 #' 
 #' collData <- list(
-#'   entity_types = list(list(
-#'     type = "ner",
-#'     labels = c("Named Entity", "NE"),
-#'     bgColor = "#7fa2ff",
-#'     borderColor = "darken",
-#'     arcs = list(list(targets = list("ner")))
-#'   )),
-#'   relation_types = list(list(
-#'     type = "Anaphora",
-#'     labels = c("Anaphora", "Ana"),
-#'     dashArray = "3,3",
-#'     color = "purple",
-#'     args = list(
-#'       list(role = "Anaphor", targets = "ner"),
-#'       list(role = "Entity", targets = "ner")
-#'     )
-#'    ))
+#'   entity_types = list(entity("Person", bgColor = annotation_colors[1]))
 #' )
 #' 
 #' if (interactive()) bradget(txt_file = txt_file, coll_data = collData)

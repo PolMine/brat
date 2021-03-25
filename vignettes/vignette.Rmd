@@ -45,12 +45,7 @@ Second, we define collection data, i.e. definitions that go beyond the individua
 
 ```{r}
 coll_data <- list(
-  entity_types = list(list(
-    type = "Person",
-    labels = c("Person", "Per"),
-    bgColor = "#7fa2ff",
-    borderColor = "darken"
-  ))
+  entity_types = list(entity("Person", bgColor = RColorBrewer::brewer.pal(8, "Accent")[1]))
 )
 ```
 
@@ -61,62 +56,3 @@ brat(doc_data = doc_data, coll_data = coll_data, width = "700px")
 ```
 
 
-## Display POS tags
-
-The package includes as sample data the object `millenium_declaration_annotated`, which is a `r is(millenium_declaration_annotated)` document. 
-
-```{r}
-millenium_declaration_annotated
-```
-
-It combines the plain text, offset annotations and metadata. We will need the text and extract it from the object.
-
-```{r}
-md_text <- as.character(millenium_declaration_annotated$content)
-```
-
-Second, we turn the POS annotations into the data format needed by brat.
-
-```{r}
-md_annotations <- NLP::annotation(millenium_declaration_annotated)
-
-w <- subset(md_annotations, type == "word")
-
-pos_data <- lapply(
-  1:length(w),
-  function(i)
-    list(
-      sprintf("T%d", i),
-      features(w[[i]])[[1]],
-      list(c(w[[i]]$start - 1L, w[[i]]$end ))
-    )
-)
-doc_data <- list(text = md_text, entities = pos_data)
-```
-
-As collection data, we define a color scheme for all pos tags present.
-
-```{r}
-pos_tags <- unique(features(w)[,1])
-pos_cols <- c(
-  RColorBrewer::brewer.pal(12, "Set3"),
-  RColorBrewer::brewer.pal(8, "Set2"),
-  RColorBrewer::brewer.pal(9, "Set1"),
-  RColorBrewer::brewer.pal(8, "Paired"),
-  RColorBrewer::brewer.pal(8, "Accent")
-)[1:length(pos_tags)]
-
-coll_data <- list(
-  entity_types = lapply(
-  1L:length(pos_tags),
-  function(i) list(
-    type = pos_tags[[i]],
-    labels = c(pos_tags[[i]], substr(pos_tags[[i]], 1, 1)),
-    bgColor = pos_cols[[i]], borderColor = "darken"
-  )
-))
-```
-
-```{r, eval = TRUE}
-brat(doc_data = doc_data, coll_data = coll_data, width = "700px")
-```

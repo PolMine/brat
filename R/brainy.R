@@ -49,72 +49,25 @@
 #'   file.copy(from = file, to = file.path(doc_dir, basename(file)))
 #' }
 #' 
-#' # Define collection data
+#' # Define collection data (= available annotations)
 #' 
+#' annotation_colors <- RColorBrewer::brewer.pal(8, "Accent")
 #' coll_data <- list(
 #'   entity_types = list(
-#'     list(
-#'       type = "Person",
-#'       labels = c("Person", "Per"),
-#'       bgColor = RColorBrewer::brewer.pal(8, "Accent")[1],
-#'       borderColor = "darken",
-#'       arcs = list(list(targets = list("Person"))),
-#'       children = list()
-#'     ),
-#'     list(
-#'       type = "Organization",
-#'       labels = c("Organization", "Org"),
-#'       bgColor = RColorBrewer::brewer.pal(8, "Accent")[2],
-#'       borderColor = "darken",
-#'       arcs = list(list(targets = list("Person"))),
-#'       children = list()
-#'     ),
-#'     list(
-#'       type = "Location",
-#'       labels = c("Location", "Loc"),
-#'       bgColor = RColorBrewer::brewer.pal(8, "Accent")[3],
-#'       borderColor = "darken",
-#'       arcs = list(list(targets = list("Person"))),
-#'       children = list()
-#'     ),
-#'     list(
-#'       type = "Date",
-#'       labels = c("Date", "Date"),
-#'       bgColor = RColorBrewer::brewer.pal(8, "Accent")[4],
-#'       borderColor = "darken",
-#'       arcs = list(list(targets = list("Person"))),
-#'       children = list()
-#'     )
+#'     entity("Person", bgColor = annotation_colors[1]),
+#'     entity("Organisaation", bgColor = annotation_colors[2]),
+#'     entity("Location", bgColor = annotation_colors[3]),
+#'     entity("Date", bgColor = annotation_colors[4])
 #'   ),
 #'   relation_types = list(
-#'     list(
-#'       type = "Anaphora",
-#'       labels = c("Anaphora", "Ana"),
-#'       dashArray = "3,3",
-#'       color = "purple",
-#'       args = list(
-#'         list(role = "Anaphor", targets = "Person"),
-#'         list(role = "Entity", targets = "Person")
-#'       )
-#'      ),
-#'      list(
-#'       type = "Birthday",
-#'       labels = c("Birthday", "born"),
-#'       dashArray = "3,3",
-#'       color = "blue",
-#'       args = list(
-#'         list(role = "Anaphor", targets = "Person"),
-#'         list(role = "Entity", targets = "Person")
-#'       )
-#'     )
+#'     relation("Anaphora", color = annotation_colors[5], roles = c("Anaphor", "Entity"), targets = c("Person", "Person")),
+#'     relation("Anaphora", color = annotation_colors[6], roles = c("Anaphor", "Entity"), targets = c("Person", "Person"))
 #'   )
 #' )
 #' 
 #' # Run brainy app (but only in interactive mode)
 #' 
-#' if (interactive()){
-#'   brainy(doc_dir = doc_dir, coll_data = coll_data)
-#' }
+#' if (interactive()) brainy(doc_dir = doc_dir, coll_data = coll_data)
 #' @export brainy
 brainy <- function(doc_dir,  coll_data, theme = "paper") { 
   

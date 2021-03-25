@@ -1,6 +1,7 @@
 <!-- badges: start -->
-  [![R build status](https://github.com/ablaette/brat/workflows/R-CMD-check/badge.svg)](https://github.com/ablaette/brat/actions)
-  <!-- badges: end -->
+[![R build status](https://github.com/ablaette/brat/workflows/R-CMD-check/badge.svg)](https://github.com/ablaette/brat/actions)
+[![codecov](https://codecov.io/gh/PolMine/brat/branch/master/graph/badge.svg)](https://codecov.io/gh/PolMine/brat/branch/master)
+<!-- badges: end -->
 
 ## The brat R package
 

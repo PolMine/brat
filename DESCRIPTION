@@ -2,7 +2,7 @@ Package: brat
 Type: Package
 Title: HTML widget, shiny gadget and shiny app to expose the visualization and annotation 
   functionality of the brat rapid annotation tool for pure R annotation workflows
-Version: 0.0.2
+Version: 0.0.2.9001
 Date: 2021-03-25
 Authors@R: person("Andreas", "Blaette", role = c("aut", "cre"), email = "andreas.blaette@uni-due.de")
 Description: This package exposes the visualization and annotation functionality of the 'brat'
@@ -39,5 +39,6 @@ Collate:
     'bradget.R'
     'annfile.R'
     'brainy.R'
+    'utils.R'
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
