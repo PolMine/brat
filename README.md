@@ -1,3 +1,7 @@
+<!-- badges: start -->
+  [![R build status](https://github.com/ablaette/brat/workflows/R-CMD-check/badge.svg)](https://github.com/ablaette/brat/actions)
+  <!-- badges: end -->
+
 ## The brat R package
 
 ### Why yet another annotation tool?
