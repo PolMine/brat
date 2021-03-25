@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">brat</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.2.9001</span>
       </span>
     </div>
 
@@ -183,72 +183,25 @@ expected to be <code>Annotation</code> class objects that have been stored using
   <span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.copy</a></span><span class='op'>(</span>from <span class='op'>=</span> <span class='va'>file</span>, to <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/file.path.html'>file.path</a></span><span class='op'>(</span><span class='va'>doc_dir</span>, <span class='fu'><a href='https://rdrr.io/r/base/basename.html'>basename</a></span><span class='op'>(</span><span class='va'>file</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
 
-<span class='co'># Define collection data</span>
+<span class='co'># Define collection data (= available annotations)</span>
 
+<span class='va'>annotation_colors</span> <span class='op'>&lt;-</span> <span class='fu'>RColorBrewer</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html'>brewer.pal</a></span><span class='op'>(</span><span class='fl'>8</span>, <span class='st'>"Accent"</span><span class='op'>)</span>
 <span class='va'>coll_data</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
   entity_types <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      type <span class='op'>=</span> <span class='st'>"Person"</span>,
-      labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Person"</span>, <span class='st'>"Per"</span><span class='op'>)</span>,
-      bgColor <span class='op'>=</span> <span class='fu'>RColorBrewer</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html'>brewer.pal</a></span><span class='op'>(</span><span class='fl'>8</span>, <span class='st'>"Accent"</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span>,
-      borderColor <span class='op'>=</span> <span class='st'>"darken"</span>,
-      arcs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>targets <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"Person"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
-      children <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>
-    <span class='op'>)</span>,
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      type <span class='op'>=</span> <span class='st'>"Organization"</span>,
-      labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Organization"</span>, <span class='st'>"Org"</span><span class='op'>)</span>,
-      bgColor <span class='op'>=</span> <span class='fu'>RColorBrewer</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html'>brewer.pal</a></span><span class='op'>(</span><span class='fl'>8</span>, <span class='st'>"Accent"</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span>,
-      borderColor <span class='op'>=</span> <span class='st'>"darken"</span>,
-      arcs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>targets <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"Person"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
-      children <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>
-    <span class='op'>)</span>,
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      type <span class='op'>=</span> <span class='st'>"Location"</span>,
-      labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Location"</span>, <span class='st'>"Loc"</span><span class='op'>)</span>,
-      bgColor <span class='op'>=</span> <span class='fu'>RColorBrewer</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html'>brewer.pal</a></span><span class='op'>(</span><span class='fl'>8</span>, <span class='st'>"Accent"</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>]</span>,
-      borderColor <span class='op'>=</span> <span class='st'>"darken"</span>,
-      arcs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>targets <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"Person"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
-      children <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>
-    <span class='op'>)</span>,
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      type <span class='op'>=</span> <span class='st'>"Date"</span>,
-      labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Date"</span>, <span class='st'>"Date"</span><span class='op'>)</span>,
-      bgColor <span class='op'>=</span> <span class='fu'>RColorBrewer</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/RColorBrewer/man/ColorBrewer.html'>brewer.pal</a></span><span class='op'>(</span><span class='fl'>8</span>, <span class='st'>"Accent"</span><span class='op'>)</span><span class='op'>[</span><span class='fl'>4</span><span class='op'>]</span>,
-      borderColor <span class='op'>=</span> <span class='st'>"darken"</span>,
-      arcs <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>targets <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='st'>"Person"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>,
-      children <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='op'>)</span>
-    <span class='op'>)</span>
+    <span class='fu'><a href='entity.html'>entity</a></span><span class='op'>(</span><span class='st'>"Person"</span>, bgColor <span class='op'>=</span> <span class='va'>annotation_colors</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span><span class='op'>)</span>,
+    <span class='fu'><a href='entity.html'>entity</a></span><span class='op'>(</span><span class='st'>"Organisaation"</span>, bgColor <span class='op'>=</span> <span class='va'>annotation_colors</span><span class='op'>[</span><span class='fl'>2</span><span class='op'>]</span><span class='op'>)</span>,
+    <span class='fu'><a href='entity.html'>entity</a></span><span class='op'>(</span><span class='st'>"Location"</span>, bgColor <span class='op'>=</span> <span class='va'>annotation_colors</span><span class='op'>[</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span>,
+    <span class='fu'><a href='entity.html'>entity</a></span><span class='op'>(</span><span class='st'>"Date"</span>, bgColor <span class='op'>=</span> <span class='va'>annotation_colors</span><span class='op'>[</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>)</span>
   <span class='op'>)</span>,
   relation_types <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-    <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      type <span class='op'>=</span> <span class='st'>"Anaphora"</span>,
-      labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Anaphora"</span>, <span class='st'>"Ana"</span><span class='op'>)</span>,
-      dashArray <span class='op'>=</span> <span class='st'>"3,3"</span>,
-      color <span class='op'>=</span> <span class='st'>"purple"</span>,
-      args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>role <span class='op'>=</span> <span class='st'>"Anaphor"</span>, targets <span class='op'>=</span> <span class='st'>"Person"</span><span class='op'>)</span>,
-        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>role <span class='op'>=</span> <span class='st'>"Entity"</span>, targets <span class='op'>=</span> <span class='st'>"Person"</span><span class='op'>)</span>
-      <span class='op'>)</span>
-     <span class='op'>)</span>,
-     <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-      type <span class='op'>=</span> <span class='st'>"Birthday"</span>,
-      labels <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Birthday"</span>, <span class='st'>"born"</span><span class='op'>)</span>,
-      dashArray <span class='op'>=</span> <span class='st'>"3,3"</span>,
-      color <span class='op'>=</span> <span class='st'>"blue"</span>,
-      args <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>
-        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>role <span class='op'>=</span> <span class='st'>"Anaphor"</span>, targets <span class='op'>=</span> <span class='st'>"Person"</span><span class='op'>)</span>,
-        <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span>role <span class='op'>=</span> <span class='st'>"Entity"</span>, targets <span class='op'>=</span> <span class='st'>"Person"</span><span class='op'>)</span>
-      <span class='op'>)</span>
-    <span class='op'>)</span>
+    <span class='fu'><a href='relation.html'>relation</a></span><span class='op'>(</span><span class='st'>"Anaphora"</span>, color <span class='op'>=</span> <span class='va'>annotation_colors</span><span class='op'>[</span><span class='fl'>5</span><span class='op'>]</span>, roles <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Anaphor"</span>, <span class='st'>"Entity"</span><span class='op'>)</span>, targets <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Person"</span>, <span class='st'>"Person"</span><span class='op'>)</span><span class='op'>)</span>,
+    <span class='fu'><a href='relation.html'>relation</a></span><span class='op'>(</span><span class='st'>"Anaphora"</span>, color <span class='op'>=</span> <span class='va'>annotation_colors</span><span class='op'>[</span><span class='fl'>6</span><span class='op'>]</span>, roles <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Anaphor"</span>, <span class='st'>"Entity"</span><span class='op'>)</span>, targets <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Person"</span>, <span class='st'>"Person"</span><span class='op'>)</span><span class='op'>)</span>
   <span class='op'>)</span>
 <span class='op'>)</span>
 
 <span class='co'># Run brainy app (but only in interactive mode)</span>
 
-<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span><span class='op'>{</span>
-  <span class='fu'>brainy</span><span class='op'>(</span>doc_dir <span class='op'>=</span> <span class='va'>doc_dir</span>, coll_data <span class='op'>=</span> <span class='va'>coll_data</span><span class='op'>)</span>
-<span class='op'>}</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='fu'>brainy</span><span class='op'>(</span>doc_dir <span class='op'>=</span> <span class='va'>doc_dir</span>, coll_data <span class='op'>=</span> <span class='va'>coll_data</span><span class='op'>)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
