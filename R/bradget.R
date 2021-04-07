@@ -1,9 +1,9 @@
-#' Brat HTML widget 
+#' Brat HTML gadget
 #' 
 #' @param txt_file File with plan text of document to be annotated.
 #' @param ann_file File with annotations (brat standoff format). If not stated
-#'   explicitly, the file is assumed to be in the same directory as txt file yet
-#'   with *.ann file extension.
+#'   explicitly, the file is assumed to be in the same directory as txt file,
+#'   but with *.ann file extension.
 #' @param coll_data bla bla
 #' @importFrom miniUI miniPage miniContentPanel gadgetTitleBar miniButtonBlock
 #'   miniTabstripPanel miniTabPanel
@@ -43,9 +43,7 @@
 #' txt_file <- xfun::with_ext(ann_file, ".txt")
 #' cat(merkel_min$content, file = txt_file)
 #' 
-#' collData <- list(
-#'   entity_types = list(entity("Person", bgColor = annotation_colors[1]))
-#' )
+#' collData <- list(entity_types = list(entity("Person", bgColor = "#7FC97F")))
 #' 
 #' if (interactive()) bradget(txt_file = txt_file, coll_data = collData)
 #' @importFrom shinyjs useShinyjs extendShinyjs js
